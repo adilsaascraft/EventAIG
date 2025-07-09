@@ -1,83 +1,84 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { cn } from '@/lib/utils'
 import {
   Home,
   Users,
   BookOpen,
-  Calendar,
-  Globe,
-  MapPin,
-  Mail,
-  Building,
-  DollarSign,
-  Camera,
-  Smartphone,
-  FileText,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
+} from 'lucide-react'
 
 const sideTabs = [
-  { name: 'Dashboard', icon: Home, baseUrl: '/home/dashboard', subtabs: [] },
+  { name: 'Dashboard', icon: Home, baseUrl: 'dashboard', subtabs: [] },
   {
     name: 'Registrations',
     icon: Users,
-    baseUrl: '/home/registrations',
-    subtabs: ['Summary', 'Registered Attendees', 'Signup Attendees', 'Slab Categories', 'Registration Form', 'Discount Codes', 'Cancellation Policy', 'Registration Settings'],
+    baseUrl: 'registrations',
+    subtabs: ['Summary', 'Settings'],
   },
-  { name: 'Abstract', icon: BookOpen, baseUrl: '/home/abstract', subtabs: ['Summary','All Abstarcts','Abstract Categories','Abstract Types','Reviewers','Abstract Settings'] },
-  { name: 'Faculty', icon: Calendar, baseUrl: '/home/faculty', subtabs: ['Summary', 'All Faculty','Convert To Faculty','Faculty Categories','Faculty Allocation','Faculty Settings'] },
-  { name: 'Agenda', icon: Calendar, baseUrl: '/home/agenda', subtabs: ['Summary', 'Sessions','Session Types','Session Halls'] },
-  { name: 'Exhibitors', icon: Building, baseUrl: '/home/exhibitors', subtabs: ['Summary', 'All Exhibitors','Floor Plan','Booths','Exhibitor Category','Exhibitor Settings'] },
-  { name: 'Sponsors', icon: DollarSign, baseUrl: '/home/sponsors', subtabs: ['Summary', 'All Sponsors','Registration Quota','Accommodation Quota','Travel Quota','Floor Plan','Booths','Sponsor Category','Sponsor Settings'] },
-  { name: 'Travel', icon: Globe, baseUrl: '/home/travel', subtabs: ['Summary', 'All Travels','Travel Desk Team','Reports','Travel Settings'] },
-  { name: 'Accomodation', icon: MapPin, baseUrl: '/home/accomodation', subtabs: ['Summary', 'All Accomodation'] },
-  { name: 'Marketing', icon: Mail, baseUrl: '/home/marketing', subtabs: ['Summary', 'Email Campaign','SMS Campaign','WhatsApp Campaign','Reports','Marketing Settings'] },
-  { name: 'Communication', icon: Mail, baseUrl: '/home/communication', subtabs: ['Summary', 'Automated Emails','Scheduled Email','Email Records','Reports','Communication Settings'] },
-  { name: 'Accounting', icon: DollarSign, baseUrl: '/home/accounting', subtabs: ['', ''] },
-  { name: 'Badging & Scanning', icon: Camera, baseUrl: '/home/badging', subtabs: ['', ''] },
-  { name: 'Event App', icon: Smartphone, baseUrl: '/home/event-app', subtabs: ['', ''] },
-  { name: 'Presentation', icon: FileText, baseUrl: '/home/presentation', subtabs: ['', ''] },
-];
+  {
+    name: 'Abstract',
+    icon: BookOpen,
+    baseUrl: 'abstract',
+    subtabs: ['Summary', 'Categories'],
+  },
+  // Add more as needed
+]
 
 export default function Sidebar() {
-  const router = useRouter();
-  const [activeTab, setActiveTab] = useState('Dashboard');
-  const [activeSubtab, setActiveSubtab] = useState('');
+  const router = useRouter()
+  const pathname = usePathname()
+  const [activeTab, setActiveTab] = useState<string>('Dashboard')
+  const [activeSubtab, setActiveSubtab] = useState<string>('')
+
+  useEffect(() => {
+    const pathParts = pathname.split('/')
+    const currentModule = pathParts[2]
+    const currentSubtab = pathParts[3]
+
+    const currentTab = sideTabs.find((tab) => tab.baseUrl === currentModule)
+    if (currentTab) {
+      setActiveTab(currentTab.name)
+      setActiveSubtab(currentSubtab)
+    } else {
+      setActiveTab('Dashboard')
+      setActiveSubtab('')
+    }
+  }, [pathname])
 
   const handleTabClick = (tab: typeof sideTabs[0]) => {
-    setActiveTab(tab.name);
+    setActiveTab(tab.name)
+    const firstSub = tab.subtabs[0]
 
-    if (tab.subtabs.length > 0) {
-      const firstSub = tab.subtabs[0];
-      setActiveSubtab(firstSub);
-      router.push(`${tab.baseUrl}/${firstSub.toLowerCase().replace(/\s+/g, '-')}`);
+    if (firstSub) {
+      const firstSlug = firstSub.toLowerCase().replace(/\s+/g, '-')
+      router.push(`/home/${tab.baseUrl}/${firstSlug}`)
     } else {
-      setActiveSubtab('');
-      router.push(tab.baseUrl);
+      router.push(`/home/${tab.baseUrl}`)
     }
-  };
+  }
 
   const handleSubtabClick = (subtab: string) => {
-    const currentTab = sideTabs.find((t) => t.name === activeTab);
-    setActiveSubtab(subtab);
+    setActiveSubtab(subtab)
+    const currentTab = sideTabs.find((tab) => tab.name === activeTab)
     if (currentTab) {
-      router.push(`${currentTab.baseUrl}/${subtab.toLowerCase().replace(/\s+/g, '-')}`);
+      const subSlug = subtab.toLowerCase().replace(/\s+/g, '-')
+      router.push(`/home/${currentTab.baseUrl}/${subSlug}`)
     }
-  };
+  }
 
   return (
     <div className="flex min-h-screen">
-      {/* Main Sidebar */}
-      <div className="w-[100px] transition-all duration-300 border-r border-gray-300 bg-blue-100 ">
+      {/* Sidebar */}
+      <div className="w-[100px] bg-blue-100 border-r border-gray-300">
         <div className="flex flex-col items-center py-4 space-y-3">
           {sideTabs.map((tab) => (
             <button
               key={tab.name}
               onClick={() => handleTabClick(tab)}
               className={cn(
-                'w-full py-2 px-1 flex flex-col items-center text-xs hover:bg-gray-300 transition-all duration-200 cursor-pointer',
+                'w-full py-2 px-1 flex flex-col items-center text-xs hover:bg-gray-300',
                 activeTab === tab.name ? 'bg-white text-blue-600 font-semibold' : 'text-gray-700'
               )}
             >
@@ -88,9 +89,9 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* Subtab Sidebar */}
-      {sideTabs.find((tab) => tab.name === activeTab && tab.subtabs.length > 0) && (
-        <div className="w-[200px] p-4 bg-blue-100 border-r border-gray-300 overflow-y-auto">
+      {/* Sub-tabs */}
+      {sideTabs.find((tab) => tab.name === activeTab)?.subtabs.length > 0 && (
+        <div className="w-[200px] bg-[#e9f0fa] border-r border-gray-300 p-4">
           <h2 className="text-sm font-semibold text-blue-900 mb-2">{activeTab}</h2>
           <ul className="space-y-1">
             {sideTabs
@@ -100,7 +101,7 @@ export default function Sidebar() {
                   <button
                     onClick={() => handleSubtabClick(subtab)}
                     className={cn(
-                      'block w-full text-left px-3 py-2 rounded text-sm hover:bg-gray-300 transition-all duration-200 cursor-pointer',
+                      'block w-full text-left px-3 py-2 rounded text-sm hover:bg-gray-300',
                       activeSubtab === subtab
                         ? 'bg-white font-medium text-blue-900'
                         : 'text-gray-800'
@@ -113,11 +114,6 @@ export default function Sidebar() {
           </ul>
         </div>
       )}
-
-      {/* Main Content Area */}
-      <div className="flex-1">
-        {/* Your dynamic content */}
-      </div>
     </div>
-  );
+  )
 }
