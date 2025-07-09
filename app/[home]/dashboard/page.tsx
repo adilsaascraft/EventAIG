@@ -12,8 +12,8 @@ export default function EventPage() {
   useEffect(() => {
   const showToast = localStorage.getItem('showWelcomeToast')
   if (showToast) {
-    toast.success('Welcome back Admin!', {
-      duration: 8000,
+    toast.success('Welcome back, Mr.Mintu Nath!', {
+      duration: 5000,
       position: 'top-center',
     })
     localStorage.removeItem('showWelcomeToast') // ✅ Clean up
@@ -43,7 +43,7 @@ export default function EventPage() {
 
   return (
     
-    <div className="w-full pb-12">
+    <div className="w-full p-4">
       <Toaster position="top-center" />
       
      <div className="flex justify-center items-center mb-4 bg-blue-50 p-4">
@@ -51,10 +51,16 @@ export default function EventPage() {
              Welcome to Your Dashboard, Mr. Mintu Nath!
          </h1>
      </div>
+     <div className="flex">
+         <h1 className="text-2xl font-bold text-left">
+             Your Events
+         </h1>
+     </div>
 
 
       {/* Tabs & Search */}
     <div className="flex justify-between items-center mb-4 border-b border-gray-200">
+    
   <div className="flex gap-6 text-sm text-gray-600">
     {tabs.map((tab) => (
       <button

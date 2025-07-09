@@ -81,13 +81,17 @@ export default function EventCard({ event }: EventCardProps) {
             <Calendar size={16} />
             {event.dates}
           </div>
-          <div className="flex items-center gap-2">
-            <CircleDot size={16} />
-            {event.eventType}
-          </div>
+          
           <div className="flex items-center gap-2">
             <MapPin size={16} />
             {event.location}
+          </div>
+        </div>
+
+        <div className="mt-2 flex gap-6 text-sm text-gray-800">
+          <div className="flex items-center gap-2">
+            <CircleDot size={16} />
+            {event.eventType}
           </div>
         </div>
 

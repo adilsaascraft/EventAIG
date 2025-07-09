@@ -59,7 +59,7 @@ export default function AddVenueForm({ onSave }: AddVenueFormProps) {
   return (
       <div className="flex flex-col h-screen bg-white">
         <div className="p-6 border-b">
-          <h2 className="text-xl font-semibold">Add Venue</h2>
+          <h2 className="text-xl font-semibold">Registration Form</h2>
         </div>
 
         <form
@@ -67,7 +67,7 @@ export default function AddVenueForm({ onSave }: AddVenueFormProps) {
           className="flex-1 overflow-y-auto p-6 space-y-4"
         >
           <div>
-            <label className="block font-medium">Venue Name *</label>
+            <label className="block font-medium">Example1 *</label>
             <input
               {...register('venueName')}
               className="w-full border border-gray-300 px-3 py-2 rounded-md"
@@ -76,7 +76,7 @@ export default function AddVenueForm({ onSave }: AddVenueFormProps) {
           </div>
 
           <div>
-            <label className="block font-medium">Address *</label>
+            <label className="block font-medium">Example2 *</label>
             <input
               {...register('address')}
               className="w-full border border-gray-300 px-3 py-2 rounded-md"
@@ -85,7 +85,7 @@ export default function AddVenueForm({ onSave }: AddVenueFormProps) {
           </div>
 
           <div>
-            <label className="block font-medium">Upload Image *</label>
+            <label className="block font-medium">Example3 *</label>
             <input
               type="file"
               accept="image/*"
@@ -109,17 +109,17 @@ export default function AddVenueForm({ onSave }: AddVenueFormProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block font-medium">City *</label>
+              <label className="block font-medium">Example4 *</label>
               <input {...register('city')} className="w-full border px-3 py-2 rounded-md" />
               {errors.city && <p className="text-sm text-red-500">{errors.city.message}</p>}
             </div>
             <div>
-              <label className="block font-medium">State *</label>
+              <label className="block font-medium">Example5 *</label>
               <input {...register('state')} className="w-full border px-3 py-2 rounded-md" />
               {errors.state && <p className="text-sm text-red-500">{errors.state.message}</p>}
             </div>
             <div>
-              <label className="block font-medium">Country *</label>
+              <label className="block font-medium">Example6 *</label>
               <select {...register('country')} className="w-full border px-3 py-2 rounded-md">
                 <option value="">Select Country</option>
                 <option value="India">India</option>
@@ -128,20 +128,20 @@ export default function AddVenueForm({ onSave }: AddVenueFormProps) {
               {errors.country && <p className="text-sm text-red-500">{errors.country.message}</p>}
             </div>
             <div>
-              <label className="block font-medium">Website *</label>
+              <label className="block font-medium">Example7 *</label>
               <input {...register('website')} className="w-full border px-3 py-2 rounded-md" />
               {errors.website && <p className="text-sm text-red-500">{errors.website.message}</p>}
             </div>
           </div>
 
           <div>
-            <label className="block font-medium">Google Map Link *</label>
+            <label className="block font-medium">Example8 *</label>
             <input {...register('googleMapLink')} className="w-full border px-3 py-2 rounded-md" />
             {errors.googleMapLink && <p className="text-sm text-red-500">{errors.googleMapLink.message}</p>}
           </div>
 
           <div>
-            <label className="block font-medium">Distance From Airport *</label>
+            <label className="block font-medium">Example9 *</label>
             <input {...register('distanceFromAirport')} className="w-full border px-3 py-2 rounded-md" />
             {errors.distanceFromAirport && (
               <p className="text-sm text-red-500">{errors.distanceFromAirport.message}</p>
@@ -149,7 +149,7 @@ export default function AddVenueForm({ onSave }: AddVenueFormProps) {
           </div>
 
           <div>
-            <label className="block font-medium">Distance From Railway Station *</label>
+            <label className="block font-medium">Example10 *</label>
             <input {...register('distanceFromRailwayStation')} className="w-full border px-3 py-2 rounded-md" />
             {errors.distanceFromRailwayStation && (
               <p className="text-sm text-red-500">{errors.distanceFromRailwayStation.message}</p>
@@ -157,7 +157,7 @@ export default function AddVenueForm({ onSave }: AddVenueFormProps) {
           </div>
 
           <div>
-            <label className="block font-medium">Nearest Metro Station *</label>
+            <label className="block font-medium">Example11 *</label>
             <input {...register('nearestMetroStation')} className="w-full border px-3 py-2 rounded-md" />
             {errors.nearestMetroStation && (
               <p className="text-sm text-red-500">{errors.nearestMetroStation.message}</p>

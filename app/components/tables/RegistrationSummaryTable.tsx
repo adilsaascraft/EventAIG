@@ -1,29 +1,24 @@
 'use client'
 
 import { useState } from 'react'
-import { FaFilter, FaSort } from 'react-icons/fa'
+import { FaSort } from 'react-icons/fa'
 import Image from 'next/image'
 import * as XLSX from 'xlsx'
-import suppliersData from '@/app/data/suppliersData'
+import registraionData from '@/app/data/registrationData'
 
-interface Supplier {
-  id: number
-  status: 'Active' | 'Inactive'
-  name: string
-  services: string
-  contact: string
-  phone: string
-  email: string
+interface Registration {
+  id: number;
+  name: string;
+  email: string;
+  category: string;
+  slab: string;
+  amount: number;
 }
 
-interface SuplierTableProps {
-  activeTab: 'All' | 'Active' | 'Inactive'
-}
-
-export default function SupplierTable({ activeTab }: SuplierTableProps) {
-  const [data, setData] = useState<Supplier[]>(suppliersData)
+export default function RegistrationSummary() {
+  const [data, setData] = useState<Registration[]>(registraionData)
   const [search, setSearch] = useState('')
-  const [editItem, setEditItem] = useState<Supplier | null>(null)
+  const [editItem, setEditItem] = useState<Registration | null>(null)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sortAsc, setSortAsc] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
@@ -33,15 +28,13 @@ export default function SupplierTable({ activeTab }: SuplierTableProps) {
   const handleExport = () => {
     const worksheet = XLSX.utils.json_to_sheet(data)
     const workbook = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Organizers')
-    XLSX.writeFile(workbook, 'organizers.xlsx')
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Registration Summary')
+    XLSX.writeFile(workbook, 'registration-summary.xlsx')
   }
 
   const filteredData = data
-    .filter(
-      (item) =>
-        (activeTab === 'All' || item.status === activeTab) &&
-        item.name.toLowerCase().includes(search.toLowerCase())
+    .filter((item) =>
+      item.name.toLowerCase().includes(search.toLowerCase())
     )
     .sort((a, b) => (sortAsc ? a.id - b.id : b.id - a.id))
 
@@ -58,10 +51,8 @@ export default function SupplierTable({ activeTab }: SuplierTableProps) {
   }
 
   const handleRowSelect = (id: number) => {
-    setSelectedRows((prevSelected) =>
-      prevSelected.includes(id)
-        ? prevSelected.filter((item) => item !== id)
-        : [...prevSelected, id]
+    setSelectedRows((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     )
   }
 
@@ -69,9 +60,6 @@ export default function SupplierTable({ activeTab }: SuplierTableProps) {
     <div className="p-4 bg-gray-100 rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-4 ml-6">
         <div className="flex items-center gap-2">
-          <button className="p-2 border-1 border-gray-100 rounded-lg bg-white">
-            <FaFilter />
-          </button>
           <input
             type="text"
             placeholder="Search..."
@@ -103,21 +91,18 @@ export default function SupplierTable({ activeTab }: SuplierTableProps) {
                 # <FaSort className="inline" />
               </th>
               <th className="px-2 py-2 text-left cursor-pointer" onClick={() => setSortAsc(!sortAsc)}>
-                SUPLIER NAME
+                NAME
               </th>
-              <th className="px-2 py-2 text-left">SERVICES</th>
-              <th className="px-2 py-2 text-left">CONTACT PERSON</th>
-              <th className="px-2 py-2 text-left">MOBILE NO</th>
-              <th className="px-2 py-2 text-left">EMAIL ID</th>
+              <th className="px-2 py-2 text-left">EMAIL</th>
+              <th className="px-2 py-2 text-left">CATEGORY</th>
+              <th className="px-2 py-2 text-left">SLAB</th>
+              <th className="px-2 py-2 text-left">AMOUNT</th>
               <th className="px-2 py-2 text-left">Action</th>
             </tr>
           </thead>
           <tbody>
             {paginatedData.map((item, index) => (
-              <tr
-                key={item.id}
-                className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}
-              >
+              <tr key={item.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
                 <td className="px-2 py-2">
                   <input
                     type="checkbox"
@@ -127,10 +112,10 @@ export default function SupplierTable({ activeTab }: SuplierTableProps) {
                 </td>
                 <td className="px-2 py-2">{item.id}</td>
                 <td className="px-2 py-2 whitespace-pre-wrap">{item.name}</td>
-                <td className="px-2 py-2">{item.services}</td>
-                <td className="px-2 py-2">{item.contact}</td>
-                <td className="px-2 py-2">{item.phone}</td>
                 <td className="px-2 py-2">{item.email}</td>
+                <td className="px-2 py-2">{item.category}</td>
+                <td className="px-2 py-2">{item.slab}</td>
+                <td className="px-2 py-2">{item.amount}</td>
                 <td className="px-2 py-2">
                   <button
                     onClick={() => setEditItem(item)}
@@ -201,43 +186,30 @@ export default function SupplierTable({ activeTab }: SuplierTableProps) {
       {editItem && (
         <div className="fixed inset-0 flex justify-center items-center">
           <div className="bg-white p-6 rounded shadow-md w-96">
-            <h2 className="text-lg font-bold mb-4">Edit Suplier</h2>
+            <h2 className="text-lg font-bold mb-4">Edit Registration</h2>
             <input
               className="w-full mb-2 p-2 border rounded"
               value={editItem.name}
-              onChange={(e) =>
-                setEditItem({ ...editItem, name: e.target.value })
-              }
-            />
-            <input
-              className="w-full mb-2 p-2 border rounded"
-              value={editItem.name}
-              onChange={(e) =>
-                setEditItem({ ...editItem, name: e.target.value })
-              }
-            />
-            <input
-              className="w-full mb-2 p-2 border rounded"
-              value={editItem.services}
-              onChange={(e) =>
-                setEditItem({ ...editItem, services: e.target.value })
-              }
-            />
-            <input
-              className="w-full mb-2 p-2 border rounded"
-              value={editItem.phone}
-              onChange={(e) =>
-                setEditItem({ ...editItem, phone: e.target.value })
-              }
+              onChange={(e) => setEditItem({ ...editItem, name: e.target.value })}
             />
             <input
               className="w-full mb-2 p-2 border rounded"
               value={editItem.email}
-              onChange={(e) =>
-                setEditItem({ ...editItem, email: e.target.value })
-              }
+              onChange={(e) => setEditItem({ ...editItem, email: e.target.value })}
             />
-            <div className="flex justify-end gap-2">
+            <input
+              className="w-full mb-2 p-2 border rounded"
+              value={editItem.category}
+              onChange={(e) => setEditItem({ ...editItem, category: e.target.value })}
+            />
+            <input
+              className="w-full mb-2 p-2 border rounded"
+              value={editItem.slab}
+              onChange={(e) => setEditItem({ ...editItem, slab: e.target.value })}
+            />
+            
+            
+            <div className="flex justify-end gap-2 mt-2">
               <button
                 className="px-4 py-1 bg-gray-300 rounded"
                 onClick={() => setEditItem(null)}
@@ -247,8 +219,8 @@ export default function SupplierTable({ activeTab }: SuplierTableProps) {
               <button
                 className="px-4 py-1 bg-sky-800 text-white rounded"
                 onClick={() => {
-                  setData((prevData) =>
-                    prevData.map((d) => (d.id === editItem.id ? editItem : d))
+                  setData((prev) =>
+                    prev.map((d) => (d.id === editItem.id ? editItem : d))
                   )
                   setEditItem(null)
                 }}

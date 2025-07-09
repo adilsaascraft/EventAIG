@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import RegistrationSummaryTable from '@/app/components/tables/RegistrationSummaryTable'
 
 type SummaryData = {
   registrationAmount: number;
@@ -42,9 +43,9 @@ export default function SummarySection() {
     <div className="p-6">
       <h2 className="text-xl font-semibold mb-4">Summary</h2>
 
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-6">
         {/* Registration Amount */}
-        <div className="bg-[#f8fbff] rounded-xl border border-gray-200 w-full sm:w-[260px] flex flex-col justify-between p-4">
+        <div className="bg-[#f8fbff] rounded-xl border border-gray-200 w-[368px] h-[246px] flex flex-col justify-between p-4">
           <h3 className="text-sm font-semibold text-center">Registration Amount</h3>
           <p className="text-2xl font-bold text-center mt-6 mb-4">
             ₹ {summary.registrationAmount.toLocaleString('en-IN')}
@@ -67,7 +68,8 @@ export default function SummarySection() {
         </div>
 
         {/* Total Tickets */}
-        <div className="bg-[#f8fbff] rounded-xl border border-gray-200 w-full sm:w-[260px] flex items-center justify-center p-4">
+        <div className="bg-[#f8fbff] rounded-xl border border-gray-200 w-full sm:w-[380px] flex flex-col items-center justify-center p-4">
+          <h3 className="text-lg font-semibold mb-12">Total Tickets</h3>
           {summary.totalTickets > 0 ? (
             <p className="text-2xl font-bold">{summary.totalTickets}</p>
           ) : (
@@ -75,8 +77,11 @@ export default function SummarySection() {
           )}
         </div>
 
+
+
         {/* Total Sales by Ticket Class */}
-        <div className="bg-[#f8fbff] rounded-xl border border-gray-200 w-full sm:w-[260px] flex items-center justify-center p-4">
+        <div className="bg-[#f8fbff] rounded-xl border border-gray-200 w-full sm:w-[380px] flex flex-col items-center justify-center p-4">
+          <h3 className="text-lg font-semibold mb-12">Total Sales by Tickets Class</h3>
           {summary.salesByClass > 0 ? (
             <p className="text-2xl font-bold">{summary.salesByClass}</p>
           ) : (
@@ -84,6 +89,8 @@ export default function SummarySection() {
           )}
         </div>
       </div>
+      <h2 className="text-xl font-semibold mb-4 py-6">This Month Registrations</h2>
+      <RegistrationSummaryTable/>
     </div>
   );
 }
