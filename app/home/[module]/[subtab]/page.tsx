@@ -1,22 +1,47 @@
-'use client'
+'use client';
 
-import { useParams } from 'next/navigation'
+import { useParams } from 'next/navigation';
+import dynamic from 'next/dynamic';
+import type { ComponentType } from 'react';
 
-export default function Page() {
-  const { module, subtab } = useParams()
+// Dynamically import your components
+const RegistrationSummary = dynamic(() => import('@/app/home/[module]/registration/summary/page'));
+const RegistrationSettingPage = dynamic(() => import('@/app/home/[module]/registration/registration-settings/page'));
+const AbstractSummary = dynamic(() => import('@/app/home/[module]/abstract/summary/page'));
+const FacultySummary = dynamic(() => import('@/app/home/[module]/faculty/summary/page'));
 
-  if (module === 'registrations' && subtab === 'summary') {
-    return <div>📝 Registrations Summary Content</div>
+// Define the module/subtab parameter structure
+interface Params {
+  module?: string;
+  subtab?: string;
+}
+
+// Correctly type the views map
+const views: Record<string, Record<string, ComponentType>> = {
+  registrations: {
+    summary: RegistrationSummary,
+    'registration-settings': RegistrationSettingPage,
+  },
+  abstract: {
+    summary: AbstractSummary,
+  },
+  faculty: {
+    summary: FacultySummary,
+  }
+};
+
+export default function DynamicSubtabPage() {
+  const { module, subtab } = useParams() as Params;
+
+  const Component = module && subtab ? views?.[module]?.[subtab] : null;
+
+  if (!Component) {
+    return (
+      <div className="text-center text-red-600 font-semibold">
+        🚫 No content found for <strong>{module}/{subtab}</strong>
+      </div>
+    );
   }
 
-  if (module === 'abstract' && subtab === 'summary') {
-    return <div>📄 Abstract Summary Content</div>
-  }
-
-  return (
-    <div className="text-gray-700">
-      <h2 className="text-xl font-semibold mb-4">Module: {module}</h2>
-      <p>Subtab: {subtab}</p>
-    </div>
-  )
+  return <Component />;
 }

@@ -11,7 +11,7 @@ type SummaryData = {
   salesByClass: number;
 };
 
-export default function SummarySection() {
+export default function RegistrationSummary() {
   const [summary, setSummary] = useState<SummaryData>({
     registrationAmount: 0,
     thisMonthAmount: 0,

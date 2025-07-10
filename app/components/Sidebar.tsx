@@ -1,21 +1,30 @@
-'use client'
+'use client';
 
-import { useRouter, usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { cn } from '@/lib/utils'
+import { useRouter, usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
+import { JSX } from 'react';
 import {
   Home,
   Users,
   BookOpen,
-} from 'lucide-react'
+  LucideIcon,
+} from 'lucide-react';
 
-const sideTabs = [
+interface SideTab {
+  name: string;
+  icon: LucideIcon;
+  baseUrl: string;
+  subtabs: string[];
+}
+
+const sideTabs: SideTab[] = [
   { name: 'Dashboard', icon: Home, baseUrl: 'dashboard', subtabs: [] },
   {
     name: 'Registrations',
     icon: Users,
     baseUrl: 'registrations',
-    subtabs: ['Summary', 'Settings'],
+    subtabs: ['Summary', 'Registration Settings'],
   },
   {
     name: 'Abstract',
@@ -24,49 +33,49 @@ const sideTabs = [
     subtabs: ['Summary', 'Categories'],
   },
   // Add more as needed
-]
+];
 
-export default function Sidebar() {
-  const router = useRouter()
-  const pathname = usePathname()
-  const [activeTab, setActiveTab] = useState<string>('Dashboard')
-  const [activeSubtab, setActiveSubtab] = useState<string>('')
+export default function Sidebar(): JSX.Element {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [activeTab, setActiveTab] = useState<string>('Dashboard');
+  const [activeSubtab, setActiveSubtab] = useState<string>('');
 
   useEffect(() => {
-    const pathParts = pathname.split('/')
-    const currentModule = pathParts[2]
-    const currentSubtab = pathParts[3]
+    const pathParts = pathname.split('/');
+    const currentModule = pathParts[2];
+    const currentSubtab = pathParts[3];
 
-    const currentTab = sideTabs.find((tab) => tab.baseUrl === currentModule)
+    const currentTab = sideTabs.find((tab) => tab.baseUrl === currentModule);
     if (currentTab) {
-      setActiveTab(currentTab.name)
-      setActiveSubtab(currentSubtab)
+      setActiveTab(currentTab.name);
+      setActiveSubtab(currentSubtab);
     } else {
-      setActiveTab('Dashboard')
-      setActiveSubtab('')
+      setActiveTab('Dashboard');
+      setActiveSubtab('');
     }
-  }, [pathname])
+  }, [pathname]);
 
-  const handleTabClick = (tab: typeof sideTabs[0]) => {
-    setActiveTab(tab.name)
-    const firstSub = tab.subtabs[0]
+  const handleTabClick = (tab: SideTab) => {
+    setActiveTab(tab.name);
+    const firstSub = tab.subtabs[0];
 
     if (firstSub) {
-      const firstSlug = firstSub.toLowerCase().replace(/\s+/g, '-')
-      router.push(`/home/${tab.baseUrl}/${firstSlug}`)
+      const firstSlug = firstSub.toLowerCase().replace(/\s+/g, '-');
+      router.push(`/home/${tab.baseUrl}/${firstSlug}`);
     } else {
-      router.push(`/home/${tab.baseUrl}`)
+      router.push(`/home/${tab.baseUrl}`);
     }
-  }
+  };
 
   const handleSubtabClick = (subtab: string) => {
-    setActiveSubtab(subtab)
-    const currentTab = sideTabs.find((tab) => tab.name === activeTab)
+    setActiveSubtab(subtab);
+    const currentTab = sideTabs.find((tab) => tab.name === activeTab);
     if (currentTab) {
-      const subSlug = subtab.toLowerCase().replace(/\s+/g, '-')
-      router.push(`/home/${currentTab.baseUrl}/${subSlug}`)
+      const subSlug = subtab.toLowerCase().replace(/\s+/g, '-');
+      router.push(`/home/${currentTab.baseUrl}/${subSlug}`);
     }
-  }
+  };
 
   return (
     <div className="flex min-h-screen">
@@ -90,7 +99,7 @@ export default function Sidebar() {
       </div>
 
       {/* Sub-tabs */}
-      {sideTabs.find((tab) => tab.name === activeTab)?.subtabs.length > 0 && (
+      {(sideTabs.find((tab) => tab.name === activeTab)?.subtabs?.length ?? 0) > 0 && (
         <div className="w-[200px] bg-[#e9f0fa] border-r border-gray-300 p-4">
           <h2 className="text-sm font-semibold text-blue-900 mb-2">{activeTab}</h2>
           <ul className="space-y-1">
@@ -115,5 +124,5 @@ export default function Sidebar() {
         </div>
       )}
     </div>
-  )
+  );
 }
