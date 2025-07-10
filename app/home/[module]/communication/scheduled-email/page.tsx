@@ -51,6 +51,7 @@ export const mockEmails: Email[] = [
 
 export default function EmailSchedulePage() {
   const tabs = ['Scheduled', 'Drafts', 'Sent']
+  
 const [activeTab, setActiveTab] = useState('Scheduled')
   const handleToggle = (id: string, status: boolean) => {
     console.log(`Toggled ${id} to ${status}`);
