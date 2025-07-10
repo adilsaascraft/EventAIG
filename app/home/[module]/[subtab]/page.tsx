@@ -3,30 +3,30 @@
 import { useParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import type { ComponentType } from 'react';
-
-// Dynamically import your components
-const RegistrationSummary = dynamic(() => import('@/app/home/[module]/registration/summary/page'));
-const RegistrationSettingPage = dynamic(() => import('@/app/home/[module]/registration/registration-settings/page'));
-const AbstractSummary = dynamic(() => import('@/app/home/[module]/abstract/summary/page'));
-const FacultySummary = dynamic(() => import('@/app/home/[module]/faculty/summary/page'));
-
 // Define the module/subtab parameter structure
 interface Params {
   module?: string;
   subtab?: string;
 }
-
 // Correctly type the views map
 const views: Record<string, Record<string, ComponentType>> = {
   registrations: {
-    summary: RegistrationSummary,
-    'registration-settings': RegistrationSettingPage,
+    'summary':dynamic(() => import('@/app/home/[module]/registration/summary/page')),
+    'registration-settings': dynamic(() => import('@/app/home/[module]/registration/registration-settings/page')),
+    'registered-attendees': dynamic(() => import('@/app/home/[module]/registration/registered-attendees/page')),
+    'signup-attendees': dynamic(() => import('@/app/home/[module]/registration/signup-attendees/page')),
+    'slab-categories': dynamic(() => import('@/app/home/[module]/registration/slab-categories/page')),
+    'registration-form': dynamic(() => import('@/app/home/[module]/registration/registration-form/page')),
+    'discount-codes': dynamic(() => import('@/app/home/[module]/registration/discount-codes/page')),
+    'cancellation-policy': dynamic(() => import('@/app/home/[module]/registration/cancellation-policy/page')),
   },
   abstract: {
-    summary: AbstractSummary,
+    'summary': dynamic(() => import('@/app/home/[module]/abstract/summary/page')),
+    // 'categories': dynamic(() => import('@/app/home/[module]/abstract/categories/page')),
   },
   faculty: {
-    summary: FacultySummary,
+    'summary': dynamic(() => import('@/app/home/[module]/faculty/summary/page')),
+    // Add more faculty sub-tabs as needed
   }
 };
 
