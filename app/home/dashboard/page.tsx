@@ -47,7 +47,7 @@ export default function EventPage() {
       <Toaster position="top-center" />
       
      <div className="flex justify-center items-center mb-4 bg-blue-50 p-4">
-         <h3 className="text-2xl text-center">
+         <h3 className="text-2xl font-semibold text-center">
              Welcome to Your Dashboard, Mr. Mintu Nath!
          </h3>
      </div>

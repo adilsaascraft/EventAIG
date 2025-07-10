@@ -58,6 +58,7 @@ const views: Record<string, Record<string, ComponentType>> = {
   },
   communication: {
     'summary': dynamic(() => import('@/app/home/[module]/communication/summary/page')),
+    'scheduled-email': dynamic(() => import('@/app/home/[module]/communication/scheduled-email/page')),
     // Add more faculty sub-tabs as needed
   },
   accounting: {
