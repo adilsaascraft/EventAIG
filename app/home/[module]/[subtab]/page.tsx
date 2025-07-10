@@ -31,6 +31,50 @@ const views: Record<string, Record<string, ComponentType>> = {
   faculty: {
     'summary': dynamic(() => import('@/app/home/[module]/faculty/summary/page')),
     // Add more faculty sub-tabs as needed
+  },
+  agenda: {
+    'summary': dynamic(() => import('@/app/home/[module]/agenda/summary/page')),
+    // Add more faculty sub-tabs as needed
+  },
+  exhibitors: {
+    'summary': dynamic(() => import('@/app/home/[module]/exhibitors/summary/page')),
+    // Add more faculty sub-tabs as needed
+  },
+  sponsors: {
+    'summary': dynamic(() => import('@/app/home/[module]/sponsors/summary/page')),
+    // Add more faculty sub-tabs as needed
+  },
+  travel: {
+    'summary': dynamic(() => import('@/app/home/[module]/travel/summary/page')),
+    // Add more faculty sub-tabs as needed
+  },
+  accomodation: {
+    'summary': dynamic(() => import('@/app/home/[module]/accomodation/summary/page')),
+    // Add more faculty sub-tabs as needed
+  },
+  marketing: {
+    'summary': dynamic(() => import('@/app/home/[module]/marketing/summary/page')),
+    // Add more faculty sub-tabs as needed
+  },
+  communication: {
+    'summary': dynamic(() => import('@/app/home/[module]/communication/summary/page')),
+    // Add more faculty sub-tabs as needed
+  },
+  accounting: {
+    'summary': dynamic(() => import('@/app/home/[module]/accounting/summary/page')),
+    // Add more faculty sub-tabs as needed
+  },
+  badgings: {
+    'summary': dynamic(() => import('@/app/home/[module]/badgings/summary/page')),
+    // Add more faculty sub-tabs as needed
+  },
+  presentations: {
+    'summary': dynamic(() => import('@/app/home/[module]/presentations/summary/page')),
+    // Add more faculty sub-tabs as needed
+  },
+  eventapp: {
+    'summary': dynamic(() => import('@/app/home/[module]/eventapp/summary/page')),
+    // Add more faculty sub-tabs as needed
   }
 };
 

@@ -158,7 +158,7 @@ const sideTabs: SideTab[] = [
   {
     name: 'Badging & Scanning',
     icon: Users,
-    baseUrl: 'badging-and-scanning',
+    baseUrl: 'badgings',
     subtabs: [
       { name: 'Summary', icon: FileText },
       { name: 'Badging Settings', icon: Settings },
@@ -177,7 +177,7 @@ const sideTabs: SideTab[] = [
   {
     name: 'Event App',
     icon: Users,
-    baseUrl: 'event-app',
+    baseUrl: 'eventapp',
     subtabs: [
       { name: 'Summary', icon: FileText },
       { name: 'Get Event App', icon: FileText },
