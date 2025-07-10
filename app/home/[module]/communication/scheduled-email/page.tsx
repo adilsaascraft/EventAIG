@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react'
 import ScheduledEmailCard from '@/app/components/ScheduledEmailCard';
+import { Button } from '@/components/ui/button';
 
 export type EmailLabel = 'Before Event' | 'During Event' | 'After Event';
 export type EmailLabelColor = 'orange' | 'blue' | 'red';
@@ -51,7 +52,7 @@ export const mockEmails: Email[] = [
 
 export default function EmailSchedulePage() {
   const tabs = ['Scheduled', 'Drafts', 'Sent']
-  
+  const [search, setSearch] = useState('')
 const [activeTab, setActiveTab] = useState('Scheduled')
   const handleToggle = (id: string, status: boolean) => {
     console.log(`Toggled ${id} to ${status}`);
@@ -80,6 +81,18 @@ const [activeTab, setActiveTab] = useState('Scheduled')
           </button>
         ))}
       </div>
+      {/* Search input */}
+  <div className="flex items-center justify-between mb-4">
+  <input
+    type="text"
+    placeholder="Search email..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    className="max-w-full w-[300px] px-4 py-2 border border-gray-300 rounded shadow-sm"
+  />
+  <Button className="ml-4 bg-sky-800 hover:bg-sky-900">Create New Email</Button>
+</div>
+
       {mockEmails.map((email) => (
         <ScheduledEmailCard
           key={email.id}
