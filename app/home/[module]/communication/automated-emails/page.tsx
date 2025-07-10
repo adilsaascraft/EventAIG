@@ -1,3 +1,5 @@
+'use client';
+
 import GroupedEmailCardSection from '@/app/components/GroupedEmailCardSection';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react'
