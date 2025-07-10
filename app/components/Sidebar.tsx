@@ -4,16 +4,8 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { JSX } from 'react';
-import {
-  Home,
-  Users,
-  BookOpen,
-  LucideIcon,
-  ChevronLeft,
-  ChevronRight,
-  FileText,
-  Settings,
-} from 'lucide-react';
+import {ChevronLeft, ChevronRight, LucideIcon} from 'lucide-react';
+import sideTabs from '@/app/components/SidebarSections'
 
 interface SideTab {
   name: string;
@@ -21,35 +13,6 @@ interface SideTab {
   baseUrl: string;
   subtabs: { name: string; icon: LucideIcon }[];
 }
-
-const sideTabs: SideTab[] = [
-  { name: 'Dashboard', icon: Home, baseUrl: 'dashboard', subtabs: [] },
-  {
-    name: 'Registrations',
-    icon: Users,
-    baseUrl: 'registrations',
-    subtabs: [
-      { name: 'Summary', icon: FileText },
-      { name: 'Registered Attendees', icon: Users },
-      { name: 'Signup-Attendees', icon: Users },
-      { name: 'Slab Categories', icon: FileText },
-      { name: 'Registration Form', icon: FileText },
-      { name: 'Discount Codes', icon: FileText },
-      { name: 'Cancellation Policy', icon: FileText },
-      { name: 'Registration Settings', icon: Settings },
-    ],
-  },
-  {
-    name: 'Abstract',
-    icon: BookOpen,
-    baseUrl: 'abstract',
-    subtabs: [
-      { name: 'Summary', icon: FileText },
-      { name: 'Categories', icon: FileText },
-    ],
-  },
-];
-
 export default function Sidebar(): JSX.Element {
   const router = useRouter();
   const pathname = usePathname();

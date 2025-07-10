@@ -22,7 +22,11 @@ const views: Record<string, Record<string, ComponentType>> = {
   },
   abstract: {
     'summary': dynamic(() => import('@/app/home/[module]/abstract/summary/page')),
-    // 'categories': dynamic(() => import('@/app/home/[module]/abstract/categories/page')),
+    'all-abstracts': dynamic(() => import('@/app/home/[module]/abstract/all-abstracts/page')),
+    'abstract-categories': dynamic(() => import('@/app/home/[module]/abstract/abstract-categories/page')),
+    'abstract-types': dynamic(() => import('@/app/home/[module]/abstract/abstract-types/page')),
+    'reviewers': dynamic(() => import('@/app/home/[module]/abstract/reviewers/page')),
+    'abstract-settings': dynamic(() => import('@/app/home/[module]/abstract/abstract-settings/page')),
   },
   faculty: {
     'summary': dynamic(() => import('@/app/home/[module]/faculty/summary/page')),
