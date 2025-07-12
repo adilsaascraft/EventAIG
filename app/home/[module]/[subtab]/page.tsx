@@ -37,6 +37,7 @@ const views: Record<string, Record<string, ComponentType>> = {
   },
   agenda: {
     'summary': dynamic(() => import('@/app/home/[module]/agenda/summary/page')),
+     'sessions': dynamic(() => import('@/app/home/[module]/agenda/sessions/page')),
     // Add more faculty sub-tabs as needed
   },
   exhibitors: {
