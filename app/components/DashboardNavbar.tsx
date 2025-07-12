@@ -1,152 +1,101 @@
 'use client';
 
 import Image from 'next/image';
-import { Menu, X } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { Eye, Edit, HelpCircle } from 'lucide-react';
+
+type EventType = {
+  title: string;
+  status: string;
+  dates: string;
+};
+
+// 🔵 Utility function for status badge class
+const getStatusClass = (status: string) => {
+  switch (status.toLowerCase()) {
+    case 'draft':
+      return 'bg-gray-100 text-gray-400';
+    case 'running':
+      return 'bg-green-100 text-green-700';
+    case 'past':
+      return 'bg-blue-100 text-blue-700';
+    case 'cancelled':
+      return 'bg-yellow-100 text-yellow-700';
+    case 'trash':
+      return 'bg-red-100 text-red-700';
+    default:
+      return 'bg-gray-100 text-gray-500';
+  }
+};
 
 export default function DashboardNavbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [event, setEvent] = useState<EventType | null>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setDropdownOpen(false);
+    const stored = localStorage.getItem('selectedEvent');
+    if (stored) {
+      try {
+        setEvent(JSON.parse(stored));
+      } catch (e) {
+        console.error('Error parsing event data', e);
       }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
   }, []);
 
-  const handleLogout = () => {
-    console.log('Logged out');
-    // Add logout logic here
-  };
-
   return (
-    <header className="text-white bg-gradient-to-r from-[#0A0E80] via-[#0E3C96] to-[#75a8f2] shadow-md sticky top-0 z-50">
-      <div className="max-w-full flex items-center justify-between h-16 px-[30px]">
-        {/* Left Section: Logo + Links */}
-        <div className="flex items-center">
-          <Image
-            src="https://res.cloudinary.com/dr5kn8993/image/upload/v1751885240/AIG_Event_Software/logo/aig-logo_lfgjea.png"
-            alt="AIG Hospitals Logo"
-            width={100}
-            height={50}
-          />
-          <nav className="hidden md:flex space-x-6 ml-[150px]">
-            <a
-              href="#"
-              className="font-medium relative pb-1 after:absolute after:w-full after:h-0.5 after:left-0 after:bottom-0 after:bg-white"
-            >
-              Home
-            </a>
-            <a href="#" className="font-medium">
-              Settings
-            </a>
-          </nav>
-        </div>
-
-        {/* Right Section */}
-        <div
-          className="hidden md:flex items-center space-x-4 relative"
-          ref={dropdownRef}
-        >
-          <Image
-            src="https://res.cloudinary.com/dr5kn8993/image/upload/v1750585607/AIG_Event_Software/icons/help_wf3sqb.png"
-            alt="Help"
-            width={20}
-            height={20}
-            className="rounded-full"
-          />
-
-          <Image
-            src="https://res.cloudinary.com/dr5kn8993/image/upload/v1750585097/AIG_Event_Software/icons/anouncement_tycrgw.png"
-            alt="Announcement"
-            width={25}
-            height={25}
-            className="rounded-full"
-          />
-
-          {/* Profile Picture with Dropdown */}
-          <div className="relative">
-            <button onClick={() => setDropdownOpen(!dropdownOpen)}>
+    <header className="text-white bg-gradient-to-r from-[#0A0E80] via-[#0E3C96] to-[#0a3b85] shadow-md sticky top-0 z-50">
+      <div className="flex items-center justify-between h-[70px] px-6">
+        {/* Left: Logo + Event Details */}
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center pr-6">
+            <Link href="/home">
               <Image
-                src="https://res.cloudinary.com/dr5kn8993/image/upload/v1750585099/AIG_Event_Software/icons/profile_zog8po.png"
-                alt="Profile Picture"
-                width={32}
-                height={32}
-                className="rounded-full"
+                src="https://res.cloudinary.com/dr5kn8993/image/upload/v1751885240/AIG_Event_Software/logo/aig-logo_lfgjea.png"
+                alt="AIG Hospitals Logo"
+                width={100}
+                height={50}
+                className="cursor-pointer"
               />
-            </button>
+            </Link>
+          </div>
 
-            {dropdownOpen && (
-              <div className="absolute right-0 mt-0 w-20 bg-gray-300 text-black rounded-lg shadow-lg z-10">
-                <button
-                  onClick={handleLogout}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-400 rounded-lg"
-                >
-                  Logout
-                </button>
-              </div>
-            )}
+          <div>
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-medium">{event?.title || 'Event Title'}</h2>
+              <span className={`text-xs px-2 py-1 rounded-full font-semibold ${getStatusClass(event?.status || '')}`}>
+                {event?.status?.toUpperCase() || 'DRAFT'}
+              </span>
+            </div>
+            <p className="text-sm text-white">{event?.dates || 'Date not available'}</p>
           </div>
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <div className="md:hidden">
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
+        {/* Right: Action Buttons */}
+        <div className="flex items-center space-x-4">
+          <button className="flex items-center gap-2 text-white hover:underline text-sm">
+            <Edit size={16} />
+            Edit Website
           </button>
+          <button className="flex items-center gap-2 text-white hover:underline text-sm">
+            <Eye size={16} />
+            Preview
+          </button>
+          <button className="text-white">
+            <HelpCircle size={20} />
+          </button>
+          <button className="bg-white text-blue-800 text-sm px-4 py-1 rounded-md font-semibold">
+            Publish
+          </button>
+          <Image
+            src="https://res.cloudinary.com/dr5kn8993/image/upload/v1750585099/AIG_Event_Software/icons/profile_zog8po.png"
+            alt="Profile"
+            width={32}
+            height={32}
+            className="rounded-full"
+          />
         </div>
       </div>
-
-      {/* Mobile Dropdown Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-blue-800 px-[30px] py-4">
-          <nav className="space-y-2">
-            <a href="#" className="block font-medium text-white">
-              Home
-            </a>
-            <a href="#" className="block font-medium text-white">
-              Settings
-            </a>
-            <div className="flex space-x-4 pt-4 border-t border-blue-600 mt-4">
-              <button aria-label="Help">
-                <Image
-                  src="https://res.cloudinary.com/dr5kn8993/image/upload/v1750239338/AIG_Event_Software/icons/help_icon.png"
-                  alt="Help"
-                  width={20}
-                  height={20}
-                />
-              </button>
-              <button aria-label="Notifications">
-                <Image
-                  src="https://res.cloudinary.com/dr5kn8993/image/upload/v1750239422/AIG_Event_Software/icons/announcement_icon.png"
-                  alt="Megaphone"
-                  width={20}
-                  height={20}
-                />
-              </button>
-              <Image
-                src="https://res.cloudinary.com/dr5kn8993/image/upload/v1750239421/AIG_Event_Software/icons/profile_icon.png"
-                alt="User Avatar"
-                width={32}
-                height={32}
-                className="rounded-full"
-              />
-            </div>
-          </nav>
-        </div>
-      )}
     </header>
   );
 }

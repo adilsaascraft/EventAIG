@@ -10,6 +10,9 @@ interface Params {
 }
 // Correctly type the views map
 const views: Record<string, Record<string, ComponentType>> = {
+  dashboard:{
+    'summary':dynamic(() => import('@/app/home/[module]/dashboard/summary/page')),
+  },
   registrations: {
     'summary':dynamic(() => import('@/app/home/[module]/registration/summary/page')),
     'registration-settings': dynamic(() => import('@/app/home/[module]/registration/registration-settings/page')),

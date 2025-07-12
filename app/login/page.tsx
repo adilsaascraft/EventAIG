@@ -40,7 +40,7 @@ export default function Login() {
       localStorage.setItem('token', 'mock-token')
       localStorage.setItem('token', 'mock-token')
       localStorage.setItem('showWelcomeToast', 'true') 
-      setTimeout(() => router.push('/home/dashboard'), 1000) // wait briefly for toast to show
+      setTimeout(() => router.push('/home'), 1000) // wait briefly for toast to show
     } else {
       setError('Invalid email or password')
     }
