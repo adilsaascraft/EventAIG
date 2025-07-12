@@ -1,5 +1,7 @@
 'use client';
 import { useState } from 'react'
+import {FaSearch} from 'react-icons/fa';
+
 import ScheduledEmailCard from '@/app/components/ScheduledEmailCard';
 import { Button } from '@/components/ui/button';
 import { mockEmails } from '@/app/data/mockEmail';
@@ -38,15 +40,21 @@ const [activeTab, setActiveTab] = useState('Scheduled')
       </div>
       {/* Search input */}
   <div className="flex items-center justify-between mb-4">
-  <input
-    type="text"
-    placeholder="Search email..."
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    className="max-w-full w-[300px] px-4 py-2 border border-gray-300 rounded shadow-sm"
-  />
-  <Button className="ml-4 bg-sky-800 hover:bg-sky-900">Create New Email</Button>
-</div>
+            {/* Search Input with Icon */}
+            <div className="relative w-[300px]">
+              <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search email..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg"
+              />
+            </div>
+            <Button className="bg-sky-800 hover:bg-sky-900 text-white rounded ml-2 flex items-center gap-2">
+             Create New Email
+            </Button>
+          </div>
 
       {mockEmails.map((email) => (
         <ScheduledEmailCard

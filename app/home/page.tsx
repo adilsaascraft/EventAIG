@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
 import Image from 'next/image'
+import {FaSearch} from 'react-icons/fa';
+
 import toast, { Toaster } from 'react-hot-toast'
 import EventCard from '@/app/components/EventCard'
 import eventData from '@/app/data/eventsData'
@@ -83,18 +85,19 @@ export default function HomePage() {
   </div>
 
   {/* Search input */}
-  <div className="ml-auto">
-    <input
-      type="text"
-      placeholder="Search event..."
-      value={search}
-      onChange={(e) => {
-        setSearch(e.target.value)
-        setCurrentPage(1)
-      }}
-      className="max-w-full w-[300px] px-4 py-2 border border-gray-300 rounded shadow-sm mb-3"
-    />
-  </div>
+  <div className="flex items-center justify-between mb-4">
+          {/* Search Input with Icon */}
+          <div className="relative w-[300px]">
+            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search events..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded"
+            />
+          </div>
+        </div>
 </div>
       
 

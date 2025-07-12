@@ -1,9 +1,12 @@
 import React from 'react'
-import ComingSoonPage from '@/app/components/comming-soon'
+
 
 function page() {
   return (
-    <ComingSoonPage/>
+    <div  className='p-4'>
+      <h1>Summary</h1>
+    </div>
+    
   )
 }
 

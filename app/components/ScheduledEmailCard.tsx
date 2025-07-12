@@ -43,7 +43,7 @@ export default function ScheduledEmailCard({
     <div className="border rounded-lg pl-12 pr-12 mb-4 bg-white">
       {/* Label */}
       <span
-        className={`inline-block text-white text-xs font-medium px-2 py-1 mb-2 ${
+        className={`inline-block text-white text-xs font-medium px-2 py-2 mb-2 ${
           email.labelColor === 'orange'
             ? 'bg-orange-500'
             : email.labelColor === 'blue'
@@ -56,7 +56,7 @@ export default function ScheduledEmailCard({
 
       {/* Title and Toggle */}
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">{email.title}</h3>
+        <h3 className="text-lg font-semibold  pb-4">{email.title}</h3>
         <div className="flex items-center space-x-2">
           <Switch checked={active} onCheckedChange={handleToggle} />
           <span className="text-sm font-medium text-gray-800">
@@ -66,8 +66,8 @@ export default function ScheduledEmailCard({
       </div>
 
       {/* Schedule + Actions */}
-      <div className="flex justify-between items-center mt-1">
-        <p className="text-sm text-gray-700">
+      <div className="flex justify-between items-center">
+        <p className="text-sm text-gray-700 pb-4">
           Scheduled at {email.scheduleDate}
         </p>
 
@@ -89,11 +89,11 @@ export default function ScheduledEmailCard({
       </div>
 
       {/* Email Info */}
-      <div className="text-sm text-gray-600 mt-2 mb-4">
-        <p>
+      <div className="text-sm text-gray-600">
+        <p className="text-sm text-gray-600 pb-4">
           <strong>To:</strong> {email.to}
         </p>
-        <p>
+        <p className="text-sm text-gray-600 pb-4">
           <strong>Email Type:</strong> {email.emailType}
         </p>
       </div>
