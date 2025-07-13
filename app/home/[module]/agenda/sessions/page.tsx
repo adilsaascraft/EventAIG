@@ -40,7 +40,7 @@ export default function SessionPage() {
 
               <SheetContent
                 side="right"
-                className="w-full max-w-[480px] sm:w-[90vw] md:w-[400px] lg:w-[480px]"
+                className="w-full max-w-[480px] sm:w-[90vw] md:w-[400px] lg:w-[550px]"
               >
                 <AddSessionForm onSave={handleSave} />
               </SheetContent>
