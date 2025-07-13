@@ -1,10 +1,15 @@
 'use client';
 
 import { useForm} from 'react-hook-form';
+import { SheetClose } from '@/components/ui/sheet'
+import { Button } from '@/components/ui/button'
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import SessionTypeDropdown from '@/app/components/input/SessionType';
+import EventdayDropdown from '@/app/components/input/EventDay'
+
 
 const sessionSchema = z.object({
   sessionType: z.string().min(1, 'Session type is required'),
@@ -25,13 +30,10 @@ type AddSessionFormProps = {
   onSave: (data: SessionFormData & { id: number; status: string }) => void
 }
 
-const sessionTypes = ['Registration', 'Breakfast', 'Presentation', 'Break', 'Reception', 'Keynote'];
-
 export default function AddSessionForm({ onSave }: AddSessionFormProps) {
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
     formState: { errors },
   } = useForm<SessionFormData>({
@@ -42,12 +44,11 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
   });
 
   const editor = useEditor({
-    extensions: [StarterKit],
-    content: '',
-    onUpdate: ({ editor }) => {
-      setValue('description', editor.getHTML());
-    },
-  });
+  extensions: [
+    StarterKit.configure({}) // ← all extensions enabled by default
+  ],
+  content: '<p>Hello World</p>',
+})
 
   const onSubmit = (data: SessionFormData) => {
     console.log('Form Data:', data);
@@ -56,17 +57,15 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <div className='flex flex-col h-screen bg-white p-4'>
+      <div className="flex items-center justify-between border-b">
+        <h2 className="text-xl font-semibold">Add Session</h2>
+      </div>
+    <form onSubmit={handleSubmit(onSubmit)} className="pt-4 space-y-4">
       {/* Session Type */}
       <div>
         <label className="text-sm font-medium">Session Type</label>
-        <select {...register('sessionType')} className="w-full border rounded p-2">
-          <option value="">Select a session type</option>
-          {sessionTypes.map(type => (
-            <option key={type} value={type}>{type}</option>
-          ))}
-        </select>
-        {errors.sessionType && <p className="text-red-500 text-xs">{errors.sessionType.message}</p>}
+        <SessionTypeDropdown/>
       </div>
 
       {/* Title */}
@@ -79,7 +78,7 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
       {/* Event Day */}
       <div>
         <label className="text-sm font-medium">Event Day</label>
-        <input {...register('eventDay')} className="w-full border rounded p-2" />
+        <EventdayDropdown/>
       </div>
 
       {/* Time & Duration */}
@@ -107,13 +106,18 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
       {/* Common Track */}
       <div className="flex items-center gap-2">
         <input type="checkbox" {...register('commonTrack')} />
-        <span className="text-sm">Common for all tracks</span>
+        <span className="text-sm">To be Announced</span>
       </div>
 
       {/* Track */}
       <div>
         <label className="text-sm font-medium">Track</label>
         <input {...register('track')} className="w-full border rounded p-2" />
+      </div>
+      {/* Common Track */}
+      <div className="flex items-center gap-2">
+        <input type="checkbox" {...register('commonTrack')} />
+        <span className="text-sm">Common for all tracks</span>
       </div>
 
       {/* Tags */}
@@ -133,11 +137,23 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
       {/* Hidden field to store description HTML */}
       <input type="hidden" {...register('description')} />
 
-      {/* Buttons */}
-      <div className="flex justify-end gap-2">
-        <button type="button" className="border px-4 py-2 rounded">Cancel</button>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-      </div>
     </form>
+    {/* Footer */}
+      <div className="sticky bottom-0 left-0 right-0 bg-white border-t px-6 py-4 flex justify-between">
+        <SheetClose asChild>
+          <Button type="button" variant="outline" className="border border-gray-400">
+            Close
+          </Button>
+        </SheetClose>
+        <Button
+          type="submit"
+          form="assignForm"
+          className="bg-sky-800 text-white hover:bg-sky-900"
+          onClick={handleSubmit(onSubmit)}
+        >
+          Save
+        </Button>
+      </div>
+    </div>
   );
 }
