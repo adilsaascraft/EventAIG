@@ -4,8 +4,6 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { SheetClose } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
 import SessionTypeDropdown from '@/app/components/input/SessionType';
 import EventdayDropdown from '@/app/components/input/EventDay';
 import TrackTypeDropdown from '@/app/components/input/TrackType'
@@ -31,17 +29,10 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = methods;
 
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: '<p>Hello World</p>',
-    onUpdate({ editor }) {
-      setValue('description', editor.getHTML());
-    },
-  });
+  
 
   const onSubmit = (data: SessionFormData) => {
     console.log('Form Data:', data);
@@ -113,7 +104,7 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
           <div>
             <label className="text-sm font-medium">Session Description</label>
             <div className="border rounded min-h-[150px] p-2">
-              <EditorContent editor={editor} />
+              
             </div>
           </div>
 
