@@ -12,6 +12,7 @@ import StartTime, {
   sessionSchema,
   SessionFormData,
 } from '@/app/components/input/StartTime';
+import TagSearch from '@/app/components/input/TagSearch'
 
 type AddSessionFormProps = {
   onSave: (data: SessionFormData & { id: number; status: string }) => void;
@@ -64,7 +65,7 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
           {/* Title */}
           <div>
             <label className="text-sm font-medium">Title</label>
-            <input {...register('title')} className="w-full border rounded p-2" />
+            <input {...register('title')} className="w-full border rounded-lg p-2" />
             {errors.title && <p className="text-red-500 text-xs">{errors.title.message}</p>}
           </div>
 
@@ -80,7 +81,7 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
           {/* Hall */}
           <div>
             <label className="text-sm font-medium">Hall</label>
-            <input {...register('hall')} className="w-full border rounded p-2" />
+            <input {...register('hall')} className="w-full border rounded-lg p-2" />
           </div>
 
           {/* Common Track */}
@@ -92,15 +93,14 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
           {/* Track */}
           <div>
             <label className="text-sm font-medium">Track</label>
-            <input {...register('track')} className="w-full border rounded p-2" />
+            <input {...register('track')} className="w-full border rounded-lg p-2" />
             {errors.track && <p className="text-red-500 text-xs">{errors.track.message}</p>}
           </div>
 
           {/* Tags */}
           <div>
             <label className="text-sm font-medium">Tags</label>
-            <input {...register('tags')} className="w-full border rounded p-2" />
-            {errors.tags && <p className="text-red-500 text-xs">{errors.tags.message}</p>}
+            <TagSearch/>
           </div>
 
           {/* Rich Text Editor (Tiptap) */}
