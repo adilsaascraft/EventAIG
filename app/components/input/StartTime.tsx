@@ -46,7 +46,7 @@ export default function StartTime() {
                 timeIntervals={5}
                 timeCaption="Time"
                 dateFormat="h:mm aa"
-                className="w-full border rounded p-2"
+                className="w-full border rounded-lg p-2"
                 placeholderText="Select time"
                 ref={ref}
               />
@@ -64,7 +64,7 @@ export default function StartTime() {
             type="number"
             min={0}
             {...register('durationHr')}
-            className="w-full border rounded p-2"
+            className="w-full border rounded-lg p-2"
           />
           {errors.durationHr && (
             <p className="text-red-500 text-xs mt-1">{errors.durationHr.message}</p>
@@ -78,7 +78,7 @@ export default function StartTime() {
             type="number"
             min={0}
             {...register('durationMin')}
-            className="w-full border rounded p-2"
+            className="w-full border rounded-lg p-2"
           />
           {errors.durationMin && (
             <p className="text-red-500 text-xs mt-1">{errors.durationMin.message}</p>

@@ -88,7 +88,7 @@ export default function TagSearch() {
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="border border-t-0 border-purple-400 rounded-b-md shadow-md bg-white mt-[-4px] max-h-48 overflow-auto z-10 relative">
+        <div className="border border-t-0 rounded-b-md shadow-md bg-white mt-[-4px] max-h-48 overflow-auto z-10 relative">
           <div className="p-2">
             <div className="flex items-center gap-2 mb-2">
               <input
@@ -110,7 +110,7 @@ export default function TagSearch() {
                 <div
                   key={tag}
                   onClick={() => handleAddTag(tag)}
-                  className="px-3 py-2 text-sm cursor-pointer hover:bg-purple-100 rounded"
+                  className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 rounded"
                 >
                   {tag}
                 </div>

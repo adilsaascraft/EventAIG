@@ -8,6 +8,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import SessionTypeDropdown from '@/app/components/input/SessionType';
 import EventdayDropdown from '@/app/components/input/EventDay';
+import TrackTypeDropdown from '@/app/components/input/TrackType'
 import StartTime, {
   sessionSchema,
   SessionFormData,
@@ -84,17 +85,22 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
             <input {...register('hall')} className="w-full border rounded-lg p-2" />
           </div>
 
-          {/* Common Track */}
+          {/* Hall Checkbox */}
           <div className="flex items-center gap-2">
             <input type="checkbox" {...register('commonTrack')} />
-            <span className="text-sm">Common for all tracks</span>
+            <span className="text-sm">To be announced</span>
           </div>
 
           {/* Track */}
           <div>
             <label className="text-sm font-medium">Track</label>
-            <input {...register('track')} className="w-full border rounded-lg p-2" />
-            {errors.track && <p className="text-red-500 text-xs">{errors.track.message}</p>}
+            <TrackTypeDropdown/>
+          </div>
+
+          {/* Track Checkbox */}
+          <div className="flex items-center gap-2">
+            <input type="checkbox" {...register('commonTrack')} />
+            <span className="text-sm">Common for all tracks</span>
           </div>
 
           {/* Tags */}
