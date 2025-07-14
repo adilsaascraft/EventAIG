@@ -89,12 +89,10 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
 
           {/* Description (Rich Text Editor Placeholder) */}
           <div>
-            <label className="text-sm font-medium">Session Description</label>
-            <div className="border rounded min-h-[150px] p-2"></div>
+            <label className="text-sm font-medium">Description</label>
+            <input {...register('description')} className="w-full min-h-[150px] border rounded-lg p-2" />
+            {errors.title && <p className="text-red-500 text-xs">{errors.title.message}</p>}
           </div>
-
-          {/* Hidden field to store description HTML */}
-          <input type="hidden" {...register('description')} />
         </form>
 
         {/* Footer */}
