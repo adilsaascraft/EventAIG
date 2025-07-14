@@ -29,7 +29,7 @@ export default function StartTime() {
   } = useFormContext<SessionFormData>();
 
   return (
-    <div className="w-full max-w-[550px]">
+    <div className="w-full max-w-[550px] relative z-[50]"> {/* Add z-index context */}
       <div className="flex gap-4">
         {/* Start Time */}
         <div className="flex-1">
@@ -49,6 +49,8 @@ export default function StartTime() {
                 className="w-full border rounded-lg p-2"
                 placeholderText="Select time"
                 ref={ref}
+                popperPlacement="bottom-start"
+                popperClassName="start-time-datepicker-popper"
               />
             )}
           />

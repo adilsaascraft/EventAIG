@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+.react-datepicker-popper {
+  z-index: 60 !important;
+  max-height: 50px !important;
+}
+
+
 /* Thin custom scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;

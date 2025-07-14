@@ -6,12 +6,13 @@ import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import SessionTypeDropdown from '@/app/components/input/SessionType';
 import EventdayDropdown from '@/app/components/input/EventDay';
-import TrackTypeDropdown from '@/app/components/input/TrackType'
+import TrackTypeDropdown from '@/app/components/input/TrackType';
 import StartTime, {
   sessionSchema,
   SessionFormData,
 } from '@/app/components/input/StartTime';
-import TagSearch from '@/app/components/input/TagSearch'
+import TagSearch from '@/app/components/input/TagSearch';
+import HallTypeDropdown from '@/app/components/input/HallType';
 
 type AddSessionFormProps = {
   onSave: (data: SessionFormData & { id: number; status: string }) => void;
@@ -31,8 +32,6 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
     reset,
     formState: { errors },
   } = methods;
-
-  
 
   const onSubmit = (data: SessionFormData) => {
     console.log('Form Data:', data);
@@ -67,45 +66,31 @@ export default function AddSessionForm({ onSave }: AddSessionFormProps) {
             <EventdayDropdown />
           </div>
 
-          {/* Start Time & Duration (modularized) */}
+          {/* Start Time & Duration */}
           <StartTime />
 
-          {/* Hall */}
+          {/* Hall Dropdown + Checkbox inside */}
           <div>
             <label className="text-sm font-medium">Hall</label>
-            <input {...register('hall')} className="w-full border rounded-lg p-2" />
+            <HallTypeDropdown />
           </div>
 
-          {/* Hall Checkbox */}
-          <div className="flex items-center gap-2">
-            <input type="checkbox" {...register('commonTrack')} />
-            <span className="text-sm">To be announced</span>
-          </div>
-
-          {/* Track */}
+          {/* Track Dropdown + Checkbox inside */}
           <div>
             <label className="text-sm font-medium">Track</label>
-            <TrackTypeDropdown/>
-          </div>
-
-          {/* Track Checkbox */}
-          <div className="flex items-center gap-2">
-            <input type="checkbox" {...register('commonTrack')} />
-            <span className="text-sm">Common for all tracks</span>
+            <TrackTypeDropdown />
           </div>
 
           {/* Tags */}
           <div>
             <label className="text-sm font-medium">Tags</label>
-            <TagSearch/>
+            <TagSearch />
           </div>
 
-          {/* Rich Text Editor (Tiptap) */}
+          {/* Description (Rich Text Editor Placeholder) */}
           <div>
             <label className="text-sm font-medium">Session Description</label>
-            <div className="border rounded min-h-[150px] p-2">
-              
-            </div>
+            <div className="border rounded min-h-[150px] p-2"></div>
           </div>
 
           {/* Hidden field to store description HTML */}

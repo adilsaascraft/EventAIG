@@ -85,7 +85,7 @@ export default function EventdayDropdown() {
 
       {/* Dropdown with accordion animation */}
       <div
-        className={`absolute z-10 w-full bg-white border border-t-0 border-gray-300 rounded-b-md shadow-md overflow-hidden transition-[max-height] duration-300 ease-in-out custom-scrollbar ${
+        className={`absolute z-80 w-full bg-white border border-t-0 border-gray-300 rounded-b-md shadow-md overflow-hidden transition-[max-height] duration-300 ease-in-out custom-scrollbar ${
           isOpen ? 'max-h-48' : 'max-h-0'
         }`}
       >

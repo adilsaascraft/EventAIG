@@ -4,16 +4,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
 const options = [
-  'Track1', 'Track2', 'Track3', 'Track4', 'Track5',
-  'Track6', 'Track7', 'Track8', 'Track9', 'Track10',
+  'Hall A', 'Hall B', 'Hall C', 'Hall D', 'Hall E',
+  'Hall F', 'Hall G', 'Hall H', 'Hall I', 'Hall J',
 ];
 
-export default function TrackTypeDropdown() {
-  const [selected, setSelected] = useState('Track1');
+export default function HallTypeDropdown() {
+  const [selected, setSelected] = useState('Hall A');
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(options);
-  const [isCommon, setIsCommon] = useState(false); // ✅ Checkbox state
+  const [isTBA, setIsTBA] = useState(false); // ✅ Checkbox state
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +46,7 @@ export default function TrackTypeDropdown() {
   };
 
   const handleClickInput = () => {
-    if (isCommon) return;
+    if (isTBA) return;
     setIsOpen(true);
     setSearch('');
     setTimeout(() => inputRef.current?.focus(), 0);
@@ -57,18 +57,18 @@ export default function TrackTypeDropdown() {
       <div
         className={`flex items-center border rounded-md px-4 py-2 ${
           isOpen ? 'border-b-1 rounded-b-none border-gray-300' : 'border-gray-300'
-        } ${isCommon ? 'bg-gray-100 cursor-not-allowed' : 'bg-white cursor-pointer'}`}
+        } ${isTBA ? 'bg-gray-100 cursor-not-allowed' : 'bg-white cursor-pointer'}`}
         onClick={handleClickInput}
       >
         <input
           type="text"
           readOnly
           value={isOpen ? search : selected}
-          onChange={(e) => !isCommon && setSearch(e.target.value)}
+          onChange={(e) => !isTBA && setSearch(e.target.value)}
           ref={inputRef}
-          className={`w-full focus:outline-none ${isCommon ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+          className={`w-full focus:outline-none ${isTBA ? 'bg-gray-100 cursor-not-allowed' : ''}`}
           placeholder="Search..."
-          disabled={isCommon}
+          disabled={isTBA}
         />
         <FaChevronDown
           className={`ml-2 text-gray-500 transition-transform duration-200 ${
@@ -77,7 +77,7 @@ export default function TrackTypeDropdown() {
         />
       </div>
 
-      {!isCommon && isOpen && (
+      {!isTBA && isOpen && (
         <div
           className={`absolute z-20 w-full bg-white border border-t-0 border-gray-300 rounded-b-md shadow-md overflow-hidden transition-all duration-300`}
         >
@@ -103,11 +103,11 @@ export default function TrackTypeDropdown() {
       <div className="flex items-center gap-2 pt-1">
         <input
           type="checkbox"
-          id="track-common"
-          checked={isCommon}
-          onChange={(e) => setIsCommon(e.target.checked)}
+          id="hall-tba"
+          checked={isTBA}
+          onChange={(e) => setIsTBA(e.target.checked)}
         />
-        <label htmlFor="track-common" className="text-sm">Common for all tracks</label>
+        <label htmlFor="hall-tba" className="text-sm">To be announced</label>
       </div>
     </div>
   );
