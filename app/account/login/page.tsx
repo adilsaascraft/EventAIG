@@ -9,7 +9,9 @@ import { useState } from 'react'
 // Zod schema
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
-  password: z.string().min(4, { message: 'Password must be at least 4 characters' }),
+  password: z.string()
+  .min(8, { message: 'Password must be at least 8 characters' })
+  .max(20, { message: 'Password can not be greater than 20 characters' }),
 })
 
 type LoginFormData = z.infer<typeof loginSchema>

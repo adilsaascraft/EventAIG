@@ -40,6 +40,7 @@ export default function CountdownTimer({ date }: CountdownTimerProps) {
   }, [date]);
 
   return (
+    <div className='w-full'>
       <div className="inline-flex items-center mt-4 border border-gray-500 rounded overflow-hidden">
   {/* Days */}
   <div className="px-4 py-2 text-center">
@@ -74,6 +75,6 @@ export default function CountdownTimer({ date }: CountdownTimerProps) {
     <div className="text-sm text-gray-500">Seconds</div>
   </div>
 </div>
-
+</div>
   );
 }

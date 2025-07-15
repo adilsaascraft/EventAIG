@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import CountdownTimer from '@/app/components/CountdownTimer';
+import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 import {
   PieChart, Pie, Cell,
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -138,7 +139,7 @@ export default function Dashboard() {
         <div className="text-center mt-2">
           <p className="text-sm">Reach your first attendee</p>
           <p className="text-xs text-gray-500">No attendees yet. Promote your event to sign people up.</p>
-          <button className="mt-2 px-4 py-1 bg-sky-800 text-white text-sm rounded hover:bg-sky-900">Promote Your Event</button>
+          <button onClick={() => router.push('/home/share')} className="mt-2 px-4 py-1 bg-sky-800 text-white text-sm rounded hover:bg-sky-900">Promote Your Event</button>
         </div>
       </div>
 
@@ -181,29 +182,41 @@ export default function Dashboard() {
 
       {/* Attendance placeholder */}
       <div className="bg-white p-4 rounded shadow border text-center">
-        <p className="font-semibold mb-2">Attendance</p>
-        <div className="text-gray-300 text-7xl">○</div>
-        <p className="text-sm mt-2">Promote Your Event</p>
+        <p className="font-semibold mb-2">Example 4</p>
+        <div className="text-gray-300 text-7xl">Need To Be Update</div>
+        <p className="text-sm mt-2">Comming Soon............</p>
       </div>
 
       {/* Event Website */}
       {event && (
         <div className="bg-white p-4 rounded shadow border">
-          <p className="font-semibold mb-2">Event Website</p>
-          <div className="rounded bg-pink-50 p-4 text-center">
-            <h3 className="font-bold text-lg">{event.title}</h3>
-            <p className="text-sm text-gray-500">📅 {event.dates} | 🕒 06:00 PM</p>
-            <p className="text-sm text-gray-500">📍 {event.location}</p>
-            <button className="mt-2 px-3 py-1 text-sm bg-red-500 text-white rounded">
-              Register Now
-            </button>
+            <p className="font-semibold mb-2">Event Website</p>
+            <div className="rounded bg-pink-50 p-4 text-center">
+                <h3 className="font-bold text-lg">{event.title}</h3>
 
-            {/* Countdown */}
-            <div className="mt-4">
-              <CountdownTimer date={event.dates} />
+                {/* ⬇️ Wrap calendar icon and date in flex container to align horizontally */}
+                <div className="flex items-center justify-center gap-2 mt-1">
+                <FaCalendarAlt size={16} color="gray" />
+                <p className="text-sm text-gray-500">{event.dates} | 🕒 06:00 PM</p>
+                </div>
+
+                {/* ⬇️ Wrap location icon and text in flex container to align horizontally */}
+                <div className="flex items-center justify-center gap-2 mt-1">
+                <FaMapMarkerAlt size={16} color="gray" />
+                <p className="text-sm text-gray-500">{event.location}</p>
+                </div>
+
+                <button className="mt-3 px-3 py-1 text-sm bg-red-500 text-white rounded">
+                Visit Website
+                </button>
+
+                {/* Countdown */}
+                <div className="mt-3">
+                <CountdownTimer date={event.dates} />
+                </div>
             </div>
-          </div>
-        </div>
+            </div>
+
       )}
 
       {/* Event Numbers */}
