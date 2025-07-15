@@ -15,11 +15,11 @@ interface SideTab {
 }
 
 const sideTabs: SideTab[] = [
-  { name: 'Dashboard', icon: Home, baseUrl: 'dashboard/summary', subtabs: [] },
+  { name: 'Dashboard', icon: Home, baseUrl: 'dashboard', subtabs: [] },
   {
-    name: 'Registrations',
+    name: 'Registration',
     icon: Users,
-    baseUrl: 'registrations',
+    baseUrl: 'registration',
     subtabs: [
       { name: 'Summary', icon: FileText },
       { name: 'Registered Attendees', icon: Users },

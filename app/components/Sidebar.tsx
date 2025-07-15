@@ -1,87 +1,51 @@
-"use client";
+'use client';
 
 import { useRouter, usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { JSX } from 'react';
-import {ChevronLeft, ChevronRight, LucideIcon} from 'lucide-react';
-import sideTabs from '@/app/components/SidebarSections'
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import sideTabs from '@/app/components/SidebarSections';
 
-interface SideTab {
-  name: string;
-  icon: LucideIcon;
-  baseUrl: string;
-  subtabs: { name: string; icon: LucideIcon }[];
-}
-export default function Sidebar(): JSX.Element {
+export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
-  const [activeTab, setActiveTab] = useState<string>('Dashboard');
-  const [activeSubtab, setActiveSubtab] = useState<string>('');
-  const [isSubtabCollapsed, setIsSubtabCollapsed] = useState<boolean>(false);
+  const [isSubtabCollapsed, setIsSubtabCollapsed] = useState(false);
 
-  useEffect(() => {
-    const storedTab = localStorage.getItem('activeTab');
-    const storedSubtab = localStorage.getItem('activeSubtab');
-    const pathParts = pathname.split('/');
-    const currentModule = pathParts[2];
-    const currentSubtab = pathParts[3]?.replace(/-/g, ' ');
+  const { activeTab, activeSubtab } = useMemo(() => {
+    const pathParts = pathname.split('/'); // ['', 'home', 'registration', 'summary']
+    const routeSegment = pathParts[2]; // 'registration'
+    const subtabSlug = pathParts[3]; // 'summary'
 
-    const currentTab = sideTabs.find((tab) => tab.baseUrl === currentModule);
-    if (currentTab) {
-      setActiveTab(currentTab.name);
-      if (currentSubtab) {
-        setActiveSubtab(currentSubtab);
-        localStorage.setItem('activeSubtab', currentSubtab);
-        localStorage.setItem('activeTab', currentTab.name);
-      } else {
-        const firstSub = currentTab.subtabs[0]?.name;
-        if (firstSub) {
-          const slug = firstSub.toLowerCase().replace(/\s+/g, '-');
-          setActiveSubtab(firstSub);
-          localStorage.setItem('activeSubtab', firstSub);
-          localStorage.setItem('activeTab', currentTab.name);
-          router.replace(`/home/${currentTab.baseUrl}/${slug}`);
-        }
-      }
-    } else if (storedTab && storedSubtab) {
-      setActiveTab(storedTab);
-      setActiveSubtab(storedSubtab);
-    }
-  }, [pathname, router]);
+    const currentTab = sideTabs.find(tab => tab.baseUrl === routeSegment);
+    const subtabName = subtabSlug?.replace(/-/g, ' ') ?? '';
 
-  const handleTabClick = (tab: SideTab) => {
-    setActiveTab(tab.name);
-    const firstSub = tab.subtabs[0]?.name;
+    return {
+      activeTab: currentTab?.name ?? '',
+      activeSubtab: subtabName,
+    };
+  }, [pathname]);
+
+  const handleTabClick = (tab: typeof sideTabs[number]) => {
+    const firstSub = tab.subtabs[0];
     if (firstSub) {
-      setActiveSubtab(firstSub);
-      const slug = firstSub.toLowerCase().replace(/\s+/g, '-');
+      const slug = firstSub.name.toLowerCase().replace(/\s+/g, '-');
       router.push(`/home/${tab.baseUrl}/${slug}`);
-      localStorage.setItem('activeTab', tab.name);
-      localStorage.setItem('activeSubtab', firstSub);
     } else {
       router.push(`/home/${tab.baseUrl}`);
-      localStorage.setItem('activeTab', tab.name);
-      localStorage.removeItem('activeSubtab');
     }
   };
 
-  const handleSubtabClick = (subtab: string) => {
-    setActiveSubtab(subtab);
-    const currentTab = sideTabs.find((tab) => tab.name === activeTab);
-    if (currentTab) {
-      const slug = subtab.toLowerCase().replace(/\s+/g, '-');
-      router.push(`/home/${currentTab.baseUrl}/${slug}`);
-      localStorage.setItem('activeSubtab', subtab);
-    }
+  const handleSubtabClick = (tab: typeof sideTabs[number], subtabName: string) => {
+    const slug = subtabName.toLowerCase().replace(/\s+/g, '-');
+    router.push(`/home/${tab.baseUrl}/${slug}`);
   };
 
   return (
     <div className="flex min-h-screen">
-      {/* Main Sidebar */}
+      {/* Main Tabs Sidebar */}
       <div className="w-[100px] bg-blue-100 border-r border-gray-300">
         <div className="flex flex-col items-center py-4 space-y-3">
-          {sideTabs.map((tab) => (
+          {sideTabs.map(tab => (
             <button
               key={tab.name}
               onClick={() => handleTabClick(tab)}
@@ -98,8 +62,8 @@ export default function Sidebar(): JSX.Element {
         </div>
       </div>
 
-      {/* Subtab Sidebar */}
-      {(sideTabs.find((tab) => tab.name === activeTab)?.subtabs.length ?? 0) > 0 && (
+      {/* Subtabs Sidebar */}
+      {activeTab && (sideTabs.find(tab => tab.name === activeTab)?.subtabs.length ?? 0) > 0 && (
         <div
           className={cn(
             'relative transition-all duration-300 bg-blue-100 border-r border-gray-300',
@@ -118,21 +82,30 @@ export default function Sidebar(): JSX.Element {
             <>
               <h2 className="text-sm font-semibold text-blue-900 mb-2">{activeTab}</h2>
               <ul className="space-y-1">
-                {sideTabs.find((tab) => tab.name === activeTab)?.subtabs.map((subtab) => (
-                  <li key={subtab.name}>
-                    <button
-                      onClick={() => handleSubtabClick(subtab.name)}
-                      className={cn(
-                        'flex items-center gap-2 w-full text-left px-3 py-2 rounded text-sm hover:bg-gray-300',
-                        activeSubtab === subtab.name ? 'bg-white font-medium text-blue-900' : 'text-gray-800'
-                      )}
-                      title={subtab.name}
-                    >
-                      <subtab.icon className="h-4 w-4" />
-                      {subtab.name}
-                    </button>
-                  </li>
-                ))}
+                {sideTabs
+                  .find(tab => tab.name === activeTab)
+                  ?.subtabs.map(subtab => (
+                    <li key={subtab.name}>
+                      <button
+                        onClick={() =>
+                          handleSubtabClick(
+                            sideTabs.find(tab => tab.name === activeTab)!,
+                            subtab.name
+                          )
+                        }
+                        className={cn(
+                          'flex items-center gap-2 w-full text-left px-3 py-2 rounded text-sm hover:bg-gray-300',
+                          activeSubtab.toLowerCase() === subtab.name.toLowerCase()
+                            ? 'bg-white font-medium text-blue-900'
+                            : 'text-gray-800'
+                        )}
+                        title={subtab.name}
+                      >
+                        <subtab.icon className="h-4 w-4" />
+                        {subtab.name}
+                      </button>
+                    </li>
+                  ))}
               </ul>
             </>
           )}
