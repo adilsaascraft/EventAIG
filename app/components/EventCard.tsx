@@ -63,7 +63,7 @@ export default function EventCard({ event }: EventCardProps) {
 
   const handleManage = () => {
     localStorage.setItem('selectedEvent', JSON.stringify(event)); // ✅ localStorage used
-    router.push('/home/dashboard/summary');
+    router.push('/home/dashboard');
   };
 
   const handleAction = (type: string) => {

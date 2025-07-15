@@ -23,9 +23,9 @@ import {
 } from 'lucide-react';
 
 const registrationData = [
-  { name: 'Sold', value: 20, color: '#7c3aed' },
-  { name: 'Refunded', value: 5, color: '#22c55e' },
-  { name: 'Yet To Be Sold', value: 75, color: '#f97316' },
+  { name: 'Sold', value: 130, color: '#7c3aed' },
+  { name: 'Refunded', value: 25, color: '#22c55e' },
+  { name: 'Yet To Be Sold', value: 145, color: '#f97316' },
 ];
 
 const registrationTrend = [
@@ -41,16 +41,16 @@ export default function Dashboard() {
   const router = useRouter();
 
   const quickLinks = [
-    { label: 'Agenda', path: '#', icon: ClipboardListIcon },
-    { label: 'Abstract', path: '#', icon: PresentationIcon },
-    { label: 'Faculty', path: '#', icon: TicketIcon },
-    { label: 'Exhibitors', path: '#', icon: UsersIcon },
-    { label: 'Sponsors', path: '#', icon: GroupIcon },
-    { label: 'Travel', path: '#', icon: UsersIcon },
-    { label: 'Accomodation', path: '#', icon: GlobeIcon },
-    { label: 'Marketing', path: '#', icon: MailIcon },
-    { label: 'Communication', path: '#', icon: MailIcon },
-    { label: 'Presentation', path: '#', icon: LayoutDashboardIcon },
+    { label: 'Agenda', path: 'agenda/summary', icon: ClipboardListIcon },
+    { label: 'Session', path: 'agenda/sessions', icon: PresentationIcon },
+    { label: 'Attendee', path: 'registration/registered-attendees', icon: UsersIcon },
+    { label: 'Exhibitors', path: 'exhibitors/summary', icon: UsersIcon },
+    { label: 'Sponsors', path: 'sponsors/summary', icon: TicketIcon },
+    { label: 'Travel', path: 'travel/summary', icon: UsersIcon },
+    { label: 'Accomodation', path: 'accomodation/summary', icon: GlobeIcon },
+    { label: 'Marketing', path: 'marketing/summary', icon: MailIcon },
+    { label: 'Communication', path: 'communication/scheduled-email', icon: MailIcon },
+    { label: 'Presentation', path: 'presentations/summary', icon: LayoutDashboardIcon },
   ];
 
   return (
@@ -60,14 +60,14 @@ export default function Dashboard() {
         <IndianRupeeIcon className="text-yellow-500 mr-3" />
         <div>
           <p className="text-sm font-medium text-gray-600">Ticket Sales</p>
-          <p className="text-lg font-bold">₹0.00</p>
+          <p className="text-lg font-bold">₹ 130000.00</p>
         </div>
       </div>
       <div className="flex items-center p-4 bg-white shadow rounded border">
         <FileIcon className="text-pink-500 mr-3" />
         <div>
           <p className="text-sm font-medium text-gray-600">Registrations</p>
-          <p className="text-lg font-bold">0</p>
+          <p className="text-lg font-bold">130</p>
         </div>
       </div>
       <div className="flex items-center p-4 bg-white shadow rounded border">
@@ -86,7 +86,7 @@ export default function Dashboard() {
             <button
               key={label}
               onClick={() => router.push(path)}
-              className="flex items-center gap-2 px-3 py-2 bg-indigo-100 text-indigo-700 text-sm rounded hover:bg-indigo-200"
+              className="flex items-center gap-2 px-3 py-2 bg-sky-100 text-sky-800 text-sm rounded hover:bg-sky-200"
             >
               <Icon size={16} />
               {label}
@@ -103,13 +103,13 @@ export default function Dashboard() {
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
-            <Line type="monotone" dataKey="registrations" stroke="#6366f1" strokeWidth={2} />
+            <Line type="monotone" dataKey="registrations" stroke="#075985" strokeWidth={2} />
           </LineChart>
         </ResponsiveContainer>
         <div className="text-center mt-2">
           <p className="text-sm">Reach your first attendee</p>
           <p className="text-xs text-gray-500">No attendees yet. Promote your event to sign people up.</p>
-          <button className="mt-2 px-4 py-1 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700">Promote Your Event</button>
+          <button className="mt-2 px-4 py-1 bg-sky-800 text-white text-sm rounded hover:bg-sky-900">Promote Your Event</button>
         </div>
       </div>
 
@@ -144,7 +144,7 @@ export default function Dashboard() {
                 </li>
               ))}
             </ul>
-            <Button className="mt-4 w-full bg-purple-100 hover:bg-purple-200 text-purple-700 text-sm">
+            <Button className="mt-4 w-full bg-sky-100 hover:bg-sky-200 text-sky-800 text-sm">
               View More
             </Button>
           </CardContent>
@@ -173,29 +173,29 @@ export default function Dashboard() {
         <p className="font-semibold mb-2">Event Numbers</p>
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
-            <PresentationIcon className="mx-auto text-indigo-500 mb-1" />
+            <PresentationIcon className="mx-auto text-sky-800 hover:sky-900 mb-1" />
             <p className="text-sm">Sessions</p>
-            <p className="font-bold">1</p>
+            <p className="font-bold">2</p>
           </div>
           <div>
-            <UsersIcon className="mx-auto text-indigo-500 mb-1" />
+            <UsersIcon className="mx-auto text-sky-800 hover:sky-900 mb-1" />
             <p className="text-sm">Speakers</p>
-            <p className="font-bold">1</p>
+            <p className="font-bold">4</p>
           </div>
           <div>
-            <GroupIcon className="mx-auto text-indigo-500 mb-1" />
+            <GroupIcon className="mx-auto text-sky-800 hover:sky-900 mb-1" />
             <p className="text-sm">Event Team</p>
-            <p className="font-bold">1</p>
+            <p className="font-bold">8</p>
           </div>
           <div>
-            <GlobeIcon className="mx-auto text-indigo-500 mb-1" />
+            <GlobeIcon className="mx-auto text-sky-800 hover:sky-900 mb-1" />
             <p className="text-sm">Sponsors</p>
-            <p className="font-bold">0</p>
+            <p className="font-bold">2</p>
           </div>
           <div>
-            <UsersIcon className="mx-auto text-indigo-500 mb-1" />
+            <UsersIcon className="mx-auto text-sky-800 hover:sky-900 mb-1" />
             <p className="text-sm">Exhibitors</p>
-            <p className="font-bold">0</p>
+            <p className="font-bold">1</p>
           </div>
         </div>
       </div>
