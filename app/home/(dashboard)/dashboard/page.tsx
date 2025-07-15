@@ -1,8 +1,9 @@
 'use client';
-
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import CountdownTimer from '@/app/components/CountdownTimer';
 import {
   PieChart, Pie, Cell,
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -22,6 +23,12 @@ import {
   LayoutDashboardIcon,
 } from 'lucide-react';
 
+type EventType = {
+  title: string;
+  dates: string;
+  location: string;
+};
+
 const registrationData = [
   { name: 'Sold', value: 130, color: '#7c3aed' },
   { name: 'Refunded', value: 25, color: '#22c55e' },
@@ -39,6 +46,26 @@ const registrationTrend = [
 
 export default function Dashboard() {
   const router = useRouter();
+  const [event, setEvent] = useState<EventType>();
+
+  useEffect(() => {
+    const stored = localStorage.getItem('selectedEvent');
+    if (stored) {
+      try {
+        setEvent(JSON.parse(stored));
+      } catch (e) {
+        console.error('Error parsing event data', e);
+      }
+    }
+  }, []);
+
+  const calculateDaysLeft = (eventDate: string) => {
+    const today = new Date();
+    const eventDay = new Date(eventDate);
+    const timeDiff = eventDay.getTime() - today.getTime();
+    const daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    return Math.max(daysLeft, 0);
+  };
 
   const quickLinks = [
     { label: 'Agenda', path: 'agenda/summary', icon: ClipboardListIcon },
@@ -73,8 +100,10 @@ export default function Dashboard() {
       <div className="flex items-center p-4 bg-white shadow rounded border">
         <CalendarIcon className="text-purple-500 mr-3" />
         <div>
-          <p className="text-sm font-medium text-gray-600">Days to Event</p>
-          <p className="text-lg font-bold">9</p>
+          <p className="text-sm font-medium text-gray-600">Days left to Event</p>
+          <p className="text-lg font-bold">
+            {event ? calculateDaysLeft(event.dates) : '--'}
+          </p>
         </div>
       </div>
 
@@ -115,40 +144,40 @@ export default function Dashboard() {
 
       {/* Pie Chart */}
       <Card>
-          <CardContent className="p-4">
-            <p className="text-sm font-semibold mb-2">Registrations</p>
-            <ResponsiveContainer width="100%" height={180}>
-              <PieChart>
-                <Pie
-                  data={registrationData}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={60}
-                  label={({ percent }) =>
-                    percent !== undefined ? `${(percent * 100).toFixed(0)}%` : ''
-                  }
-                >
-                  {registrationData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-            <ul className="text-xs mt-2 space-y-1">
-              {registrationData.map((d, i) => (
-                <li key={i} className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full" style={{ background: d.color }} />
-                  {d.name}: {d.value}
-                </li>
-              ))}
-            </ul>
-            <Button className="mt-4 w-full bg-sky-100 hover:bg-sky-200 text-sky-800 text-sm">
-              View More
-            </Button>
-          </CardContent>
-        </Card>
+        <CardContent className="p-4">
+          <p className="text-sm font-semibold mb-2">Registrations</p>
+          <ResponsiveContainer width="100%" height={180}>
+            <PieChart>
+              <Pie
+                data={registrationData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={60}
+                label={({ percent }) =>
+                  percent !== undefined ? `${(percent * 100).toFixed(0)}%` : ''
+                }
+              >
+                {registrationData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+          <ul className="text-xs mt-2 space-y-1">
+            {registrationData.map((d, i) => (
+              <li key={i} className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full" style={{ background: d.color }} />
+                {d.name}: {d.value}
+              </li>
+            ))}
+          </ul>
+          <Button className="mt-4 w-full bg-sky-100 hover:bg-sky-200 text-sky-800 text-sm">
+            View More
+          </Button>
+        </CardContent>
+      </Card>
 
       {/* Attendance placeholder */}
       <div className="bg-white p-4 rounded shadow border text-center">
@@ -158,15 +187,24 @@ export default function Dashboard() {
       </div>
 
       {/* Event Website */}
-      <div className="bg-white p-4 rounded shadow border">
-        <p className="font-semibold mb-2">Event Website</p>
-        <div className="rounded bg-pink-50 p-4">
-          <h3 className="font-bold text-lg">AIG Summer Event 2025</h3>
-          <p className="text-sm text-gray-500">📅 Aug 23, 2025 | 🕒 06:00 PM</p>
-          <p className="text-sm text-gray-500">📍 Gachibowli, Hyderabad - India</p>
-          <button className="mt-2 px-3 py-1 text-sm bg-red-500 text-white rounded">Register Now</button>
+      {event && (
+        <div className="bg-white p-4 rounded shadow border">
+          <p className="font-semibold mb-2">Event Website</p>
+          <div className="rounded bg-pink-50 p-4 text-center">
+            <h3 className="font-bold text-lg">{event.title}</h3>
+            <p className="text-sm text-gray-500">📅 {event.dates} | 🕒 06:00 PM</p>
+            <p className="text-sm text-gray-500">📍 {event.location}</p>
+            <button className="mt-2 px-3 py-1 text-sm bg-red-500 text-white rounded">
+              Register Now
+            </button>
+
+            {/* Countdown */}
+            <div className="mt-4">
+              <CountdownTimer date={event.dates} />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Event Numbers */}
       <div className="bg-white p-4 rounded shadow border">
@@ -202,7 +240,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-
-
-        
