@@ -34,7 +34,7 @@ export default function Login() {
     setIsLoading(true)
 
     const hardcodedEmail = 'admin@aig.com'
-    const hardcodedPassword = 'aig@123'
+    const hardcodedPassword = 'admin@123'
 
     await new Promise((res) => setTimeout(res, 2000))
 
