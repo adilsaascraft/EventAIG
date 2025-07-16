@@ -76,7 +76,10 @@
   /* Font family variables */
   --font-primary: 'Poppins', sans-serif;
   --font-secondary: 'Francois One', sans-serif;
-
+  --chart-label-fill:var(--color-green-700);
+  --color-chrome: #3b82f6;
+  --color-safari: #10b981;
+  --color-firefox: #f59e0b;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);

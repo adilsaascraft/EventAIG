@@ -1,14 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import BarChartInteractive from '@/app/components/BarChart'
+import ChartPieDonutText from '@/app/components/PieChart'
 import CountdownTimer from '@/app/components/CountdownTimer';
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
-import {
-  PieChart, Pie, Cell,
-  LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
-} from 'recharts';
 
 import {
   CalendarIcon,
@@ -30,20 +26,20 @@ type EventType = {
   location: string;
 };
 
-const registrationData = [
-  { name: 'Sold', value: 130, color: '#7c3aed' },
-  { name: 'Refunded', value: 25, color: '#22c55e' },
-  { name: 'Yet To Be Sold', value: 145, color: '#f97316' },
-];
+// const registrationData = [
+//   { name: 'Sold', value: 130, color: '#7c3aed' },
+//   { name: 'Refunded', value: 25, color: '#22c55e' },
+//   { name: 'Yet To Be Sold', value: 145, color: '#f97316' },
+// ];
 
-const registrationTrend = [
-  { name: 'Week 1', registrations: 120 },
-  { name: 'Week 2', registrations: 240 },
-  { name: 'Week 3', registrations: 280 },
-  { name: 'Week 4', registrations: 390 },
-  { name: 'Week 5', registrations: 180 },
-  { name: 'Week 6', registrations: 90 },
-];
+// const registrationTrend = [
+//   { name: 'Week 1', registrations: 120 },
+//   { name: 'Week 2', registrations: 240 },
+//   { name: 'Week 3', registrations: 280 },
+//   { name: 'Week 4', registrations: 390 },
+//   { name: 'Week 5', registrations: 180 },
+//   { name: 'Week 6', registrations: 90 },
+// ];
 
 export default function Dashboard() {
   const router = useRouter();
@@ -85,7 +81,7 @@ export default function Dashboard() {
     <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
       {/* Top Stats */}
       <div className="flex items-center p-4 bg-white shadow rounded border">
-        <IndianRupeeIcon className="text-yellow-500 mr-3" />
+        <IndianRupeeIcon size={30} className=" text-yellow-500 mr-3" />
         <div>
           <p className="text-sm font-medium text-gray-600">Ticket Sales</p>
           <p className="text-lg font-bold">₹ 130000.00</p>
@@ -126,25 +122,15 @@ export default function Dashboard() {
       </div>
 
       {/* Registration Trend */}
-      <div className="bg-white p-4 rounded shadow border">
-        <p className="font-semibold mb-2">Registration Trend</p>
-        <ResponsiveContainer width="100%" height={200}>
-          <LineChart data={registrationTrend}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="registrations" stroke="#075985" strokeWidth={2} />
-          </LineChart>
-        </ResponsiveContainer>
-        <div className="text-center mt-2">
-          <p className="text-sm">Reach your first attendee</p>
-          <p className="text-xs text-gray-500">No attendees yet. Promote your event to sign people up.</p>
-          <button onClick={() => router.push('/home/share')} className="mt-2 px-4 py-1 bg-sky-800 text-white text-sm rounded hover:bg-sky-900">Promote Your Event</button>
-        </div>
+      <div>
+        <BarChartInteractive/>
       </div>
 
       {/* Pie Chart */}
-      <Card>
+      <div>
+        <ChartPieDonutText/>
+      </div>
+      {/* <Card>
         <CardContent className="p-4">
           <p className="text-sm font-semibold mb-2">Registrations</p>
           <ResponsiveContainer width="100%" height={180}>
@@ -178,7 +164,7 @@ export default function Dashboard() {
             View More
           </Button>
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* Attendance placeholder */}
       <div className="bg-white p-4 rounded shadow border text-center">
@@ -191,7 +177,7 @@ export default function Dashboard() {
       {event && (
         <div className="bg-white p-4 rounded shadow border">
             <p className="font-semibold mb-2">Event Website</p>
-            <div className="rounded bg-pink-50 p-4 text-center">
+            <div className="rounded bg-sky-50 p-4 text-center">
                 <h3 className="font-bold text-lg">{event.title}</h3>
 
                 {/* ⬇️ Wrap calendar icon and date in flex container to align horizontally */}

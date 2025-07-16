@@ -39,7 +39,7 @@ export default function SharePage() {
       {event && (
         <>
         {/* {Event Image} */}
-        <div className="bg-pink-50 p-4 rounded mb-4">
+        <div className="bg-sky-50 p-4 rounded mb-4">
         <div className="flex justify-center items-center mt-3">
             <Image
                       src={event.image}
