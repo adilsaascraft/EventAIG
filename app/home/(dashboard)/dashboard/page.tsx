@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import BarChartInteractive from '@/app/components/BarChart'
 import ChartPieDonutText from '@/app/components/PieChart'
+import AttendenceChart from '@/app/components/AttendenceChart'
 import CountdownTimer from '@/app/components/CountdownTimer';
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 
@@ -130,49 +131,11 @@ export default function Dashboard() {
       <div>
         <ChartPieDonutText/>
       </div>
-      {/* <Card>
-        <CardContent className="p-4">
-          <p className="text-sm font-semibold mb-2">Registrations</p>
-          <ResponsiveContainer width="100%" height={180}>
-            <PieChart>
-              <Pie
-                data={registrationData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={60}
-                label={({ percent }) =>
-                  percent !== undefined ? `${(percent * 100).toFixed(0)}%` : ''
-                }
-              >
-                {registrationData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-          <ul className="text-xs mt-2 space-y-1">
-            {registrationData.map((d, i) => (
-              <li key={i} className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full" style={{ background: d.color }} />
-                {d.name}: {d.value}
-              </li>
-            ))}
-          </ul>
-          <Button className="mt-4 w-full bg-sky-100 hover:bg-sky-200 text-sky-800 text-sm">
-            View More
-          </Button>
-        </CardContent>
-      </Card> */}
 
       {/* Attendance placeholder */}
-      <div className="bg-white p-4 rounded shadow border text-center">
-        <p className="font-semibold mb-2">Example 4</p>
-        <div className="text-gray-300 text-7xl">Need To Be Update</div>
-        <p className="text-sm mt-2">Comming Soon............</p>
+      <div>
+      <AttendenceChart/>
       </div>
-
       {/* Event Website */}
       {event && (
         <div className="bg-white p-4 rounded shadow border">
