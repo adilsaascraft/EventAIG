@@ -123,7 +123,7 @@ export default function Dashboard() {
       </div>
       {/* Event Website */}
       {event && (
-        <div className="bg-white p-4 rounded shadow border">
+        <div className="bg-white p-4 rounded-lg shadow border">
             <p className="font-semibold mb-2">Event Website</p>
             <div className="rounded bg-sky-50 p-4 text-center">
                 <h3 className="font-bold text-lg">{event.title}</h3>
@@ -154,7 +154,7 @@ export default function Dashboard() {
       )}
 
       {/* Event Numbers */}
-      <div className="bg-white p-4 rounded shadow border">
+      <div className="bg-white p-4 rounded-lg shadow border">
         <p className="font-semibold mb-2">Event Numbers</p>
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
