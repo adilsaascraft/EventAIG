@@ -190,7 +190,7 @@ export default function BarChartInteractive() {
       </CardContent>
       <div className="text-center">
           <p className="text-md pb-2">Did not get enough registrations 🤔?</p>
-          <Button onClick={() => router.push('/home/share')} className="mb-2 px-4 py-1 bg-sky-800 text-white text-sm rounded hover:bg-sky-900">Promote Your Event</Button>
+          <Button onClick={() => router.push('/home/share')} className="mt-2 mb-2 px-4 py-1 bg-sky-800 text-white text-sm rounded hover:bg-sky-900">Promote Your Event</Button>
         </div>
     </Card>
   )

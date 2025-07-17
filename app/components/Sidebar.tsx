@@ -43,15 +43,17 @@ export default function Sidebar() {
   return (
     <div className="flex min-h-screen">
       {/* Main Tabs Sidebar */}
-      <div className="w-[100px] bg-blue-100 border-r border-gray-300">
+      <div className="w-[105px] bg-blue-100 border-r border-gray-300">
         <div className="flex flex-col items-center py-4 space-y-3">
           {sideTabs.map(tab => (
             <button
               key={tab.name}
               onClick={() => handleTabClick(tab)}
               className={cn(
-                'w-full py-2 px-1 flex flex-col items-center text-xs hover:bg-gray-300',
-                activeTab === tab.name ? 'bg-white text-blue-600 font-semibold' : 'text-gray-700'
+                'w-full py-2 px-1 flex flex-col items-center text-xs hover:bg-gray-300 border-l-[3px]',
+                activeTab === tab.name
+                  ? 'bg-white text-sky-800 font-semibold border-sky-800'
+                  : 'text-black border-transparent'
               )}
               title={tab.name}
             >
@@ -63,54 +65,55 @@ export default function Sidebar() {
       </div>
 
       {/* Subtabs Sidebar */}
-      {activeTab && (sideTabs.find(tab => tab.name === activeTab)?.subtabs.length ?? 0) > 0 && (
-        <div
-          className={cn(
-            'relative transition-all duration-300 bg-blue-100 border-r border-gray-300',
-            isSubtabCollapsed ? 'w-[0px]' : 'w-[220px] p-4'
-          )}
-        >
-          <button
-            onClick={() => setIsSubtabCollapsed(!isSubtabCollapsed)}
-            className="absolute -right-3 top-3 z-10 p-1 bg-gray-100 border rounded-full shadow"
-            title={isSubtabCollapsed ? 'Expand' : 'Collapse'}
+      {activeTab &&
+        (sideTabs.find(tab => tab.name === activeTab)?.subtabs.length ?? 0) > 0 && (
+          <div
+            className={cn(
+              'relative transition-all duration-300 bg-blue-100 border-r border-gray-300',
+              isSubtabCollapsed ? 'w-[0px]' : 'w-[220px] p-3'
+            )}
           >
-            {isSubtabCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-          </button>
+            <button
+              onClick={() => setIsSubtabCollapsed(!isSubtabCollapsed)}
+              className="absolute -right-3 top-3 z-10 p-1 bg-gray-100 border rounded-full shadow"
+              title={isSubtabCollapsed ? 'Expand' : 'Collapse'}
+            >
+              {isSubtabCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+            </button>
 
-          {!isSubtabCollapsed && (
-            <>
-              <h2 className="text-sm font-semibold text-blue-900 mb-2">{activeTab}</h2>
-              <ul className="space-y-1">
-                {sideTabs
-                  .find(tab => tab.name === activeTab)
-                  ?.subtabs.map(subtab => (
-                    <li key={subtab.name}>
-                      <button
-                        onClick={() =>
-                          handleSubtabClick(
-                            sideTabs.find(tab => tab.name === activeTab)!,
-                            subtab.name
-                          )
-                        }
-                        className={cn(
-                          'flex items-center gap-2 w-full text-left px-3 py-2 rounded text-sm hover:bg-gray-300',
-                          activeSubtab.toLowerCase() === subtab.name.toLowerCase()
-                            ? 'bg-white font-medium text-blue-900'
-                            : 'text-gray-800'
-                        )}
-                        title={subtab.name}
-                      >
-                        <subtab.icon className="h-4 w-4" />
-                        {subtab.name}
-                      </button>
-                    </li>
-                  ))}
-              </ul>
-            </>
-          )}
-        </div>
-      )}
+            {!isSubtabCollapsed && (
+              <>
+                <h2 className="text-sm font-semibold text-sky-900 mb-2">{activeTab}</h2>
+                <ul className="space-y-1">
+                  {sideTabs
+                    .find(tab => tab.name === activeTab)
+                    ?.subtabs.map(subtab => (
+                      <li key={subtab.name}>
+                        <button
+                          onClick={() =>
+                            handleSubtabClick(
+                              sideTabs.find(tab => tab.name === activeTab)!,
+                              subtab.name
+                            )
+                          }
+                          className={cn(
+                            'flex items-center gap-2 w-full text-left px-3 py-2 rounded text-sm hover:bg-gray-300 border-l-[3px]',
+                            activeSubtab.toLowerCase() === subtab.name.toLowerCase()
+                              ? 'bg-white font-medium text-blue-900 border-sky-800'
+                              : 'text-gray-800 border-transparent'
+                          )}
+                          title={subtab.name}
+                        >
+                          <subtab.icon className="h-4 w-4" />
+                          {subtab.name}
+                        </button>
+                      </li>
+                    ))}
+                </ul>
+              </>
+            )}
+          </div>
+        )}
     </div>
   );
 }

@@ -27,21 +27,6 @@ type EventType = {
   location: string;
 };
 
-// const registrationData = [
-//   { name: 'Sold', value: 130, color: '#7c3aed' },
-//   { name: 'Refunded', value: 25, color: '#22c55e' },
-//   { name: 'Yet To Be Sold', value: 145, color: '#f97316' },
-// ];
-
-// const registrationTrend = [
-//   { name: 'Week 1', registrations: 120 },
-//   { name: 'Week 2', registrations: 240 },
-//   { name: 'Week 3', registrations: 280 },
-//   { name: 'Week 4', registrations: 390 },
-//   { name: 'Week 5', registrations: 180 },
-//   { name: 'Week 6', registrations: 90 },
-// ];
-
 export default function Dashboard() {
   const router = useRouter();
   const [event, setEvent] = useState<EventType>();
@@ -106,7 +91,7 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white p-4 rounded shadow border">
+      <div className="bg-white p-4 rounded-lg shadow border">
         <p className="font-semibold mb-3">Quick Actions</p>
         <div className="grid grid-cols-2 gap-2">
           {quickLinks.map(({ label, path, icon: Icon }) => (

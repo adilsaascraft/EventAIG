@@ -32,15 +32,15 @@ const chartConfig = {
   registration: {
     label: "Registrations",
   },
-  chrome: {
+  sold: {
     label: "Sold",
     color: "var(--chart-1)",
   },
-  safari: {
+  refund: {
     label: "Refunded",
     color: "var(--chart-2)",
   },
-  firefox: {
+  yettostart: {
     label: "Yet to be sold",
     color: "var(--chart-3)",
   },
@@ -57,63 +57,79 @@ export default function ChartPieDonutText() {
         <CardTitle>Registrations</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
-        >
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+  <div className="flex items-center justify-between px-4 py-4">
+    {/* Pie Chart on the left */}
+    <ChartContainer
+      config={chartConfig}
+      className="w-[250px] h-[250px]"
+    >
+      <PieChart width={260} height={260}>
+        <ChartTooltip
+          cursor={false}
+          content={<ChartTooltipContent hideLabel />}
+        />
+        <Pie
+          data={chartData}
+          dataKey="count"
+          nameKey="ticket"
+          innerRadius={60}
+          outerRadius={100}
+          strokeWidth={5}
+          activeShape={({ outerRadius = 0, ...props }: PieSectorDataItem) => (
+            <Sector {...props} outerRadius={outerRadius + 10} />
+          )}
+          labelLine={false}
+          label={({ cx, cy }) => (
+            <text
+              x={cx}
+              y={cy}
+              textAnchor="middle"
+              dominantBaseline="middle"
+            >
+              <tspan
+                x={cx}
+                y={cy}
+                fill="black"
+                fontSize="20"
+                fontWeight="bold"
+              >
+                {totalVisitors.toLocaleString()}
+              </tspan>
+              <tspan
+                x={cx}
+                y={cy + 20}
+                fill="black"
+                fontSize="14"
+              >
+                Total Tickets
+              </tspan>
+            </text>
+          )}
+        />
+      </PieChart>
+    </ChartContainer>
+
+    {/* Legend on the right */}
+    <div className="flex flex-col gap-4 text-sm w-full max-w-[200px]">
+      {chartData.map((item) => (
+        <div key={item.ticket} className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span
+              className="inline-block h-3 w-3 rounded-full"
+              style={{ backgroundColor: item.fill }}
             />
-            <Pie
-              data={chartData}
-              dataKey="count"
-              nameKey="ticket"
-              innerRadius={60}
-              outerRadius={100}
-              strokeWidth={5}
-              activeShape={({
-                outerRadius = 0,
-                ...props
-              }: PieSectorDataItem) => (
-                <Sector {...props} outerRadius={outerRadius + 10} />
-              )}
-              labelLine={false}
-              label={({ cx, cy }) => (
-                <text
-                  x={cx}
-                  y={cy}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                >
-                  <tspan
-                    x={cx}
-                    y={cy}
-                    fill="black"
-                    fontSize="24"
-                    fontWeight="bold"
-                  >
-                    {totalVisitors.toLocaleString()}
-                  </tspan>
-                  <tspan
-                    x={cx}
-                    y={cy + 24}
-                    fill="black"
-                    fontWeight="semi-bold"
-                    fontSize="16"
-                  >
-                    Total Tickets
-                  </tspan>
-                </text>
-              )}
-            />
-          </PieChart>
-        </ChartContainer>
-        
-      </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <Button className="mt-4 w-full bg-sky-100 hover:bg-sky-200 text-sky-800 text-sm">
+            <span className="text-gray-700">{item.ticket}</span>
+          </div>
+          <span className="font-semibold">{item.count}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</CardContent>
+
+      
+      <CardFooter className="flex-col text-sm">
+        <Button className="w-full bg-sky-100 hover:bg-sky-200 text-sky-800 text-sm">
           View More
         </Button>
       </CardFooter>
