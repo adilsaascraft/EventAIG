@@ -1,10 +1,12 @@
-import React from 'react'
-import ComingSoonPage from '@/app/components/comming-soon'
+// app/dashboard/page.tsx (or any page)
+'use client';
+import GridExample from '@/app/components/ag-grid'; // adjust path as needed
 
-function page() {
+export default function DashboardPage() {
   return (
-    <ComingSoonPage/>
-  )
+    <div className="p-4">
+      <h1 className="text-2xl font-semibold mb-4">Registration Data</h1>
+      <GridExample />
+    </div>
+  );
 }
-
-export default page
