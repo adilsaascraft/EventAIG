@@ -69,16 +69,16 @@ export default function Sidebar() {
         (sideTabs.find(tab => tab.name === activeTab)?.subtabs.length ?? 0) > 0 && (
           <div
             className={cn(
-              'relative transition-all duration-300 bg-blue-100 border-r border-gray-300',
+              'relative transition-all duration-300 bg-blue-100 border-0 border-gray-100',
               isSubtabCollapsed ? 'w-[0px]' : 'w-[220px] p-3'
             )}
           >
             <button
               onClick={() => setIsSubtabCollapsed(!isSubtabCollapsed)}
-              className="absolute -right-3 top-3 z-10 p-1 bg-gray-100 border rounded-full shadow"
+              className="absolute -right-3 top-0 p-1 z-10 bg-blue-100 rounded-full"
               title={isSubtabCollapsed ? 'Expand' : 'Collapse'}
             >
-              {isSubtabCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+              {isSubtabCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
             </button>
 
             {!isSubtabCollapsed && (
